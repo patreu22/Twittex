@@ -1,0 +1,1 @@
+TwittexZiel:Ein Kurznachrichtendienst (ähnlich Twitter) mit feineren Privatsphären-Einstellungen zum Einsatz im universitären Umfeld.
