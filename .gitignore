@@ -1,0 +1,11 @@
+#Ignore PyCharm Project
+.idea/
+
+#Ignore Database
+/db.sqlite3
+
+#Ignore compiled files
+/*.pyc
+
+#Ignore __init__.py
+/__init__.py
