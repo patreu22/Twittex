@@ -6,6 +6,3 @@
 
 #Ignore compiled files
 /*.pyc
-
-#Ignore __init__.py
-/__init__.py
