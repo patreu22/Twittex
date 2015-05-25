@@ -78,9 +78,9 @@ WSGI_APPLICATION = 'Twittex.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'twittextestdb',
-        'USER': 'django',
-        'PASSWORD': '',
+        'NAME': 'test_db',
+        'USER': 'Duy Bach',
+        'PASSWORD': 'CoL201',
         'HOST': 'localhost',
         'PORT': '',
     }
