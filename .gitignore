@@ -1,8 +1,5 @@
 #Ignore PyCharm Project
 .idea/
 
-#Ignore Database
-/db.sqlite3
-
 #Ignore compiled files
-/*.pyc
+*.pyc
