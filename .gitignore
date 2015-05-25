@@ -3,3 +3,7 @@
 
 #Ignore compiled files
 *.pyc
+
+#Ignore folder (?)
+migrations
+__pycache__
