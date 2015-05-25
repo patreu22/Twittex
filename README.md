@@ -15,7 +15,8 @@ Get it work:
   
 Start it:  
 1) Run Postgresql  
-2) Start App with $python manage.py runserver  
+2) Start App with  
+  $python manage.py runserver  
   
   
 Enjoy ;-)  
