@@ -4,12 +4,14 @@ from django.conf.urls import patterns, url, include
 from twittexApp import views
 
 
-from django.views.generic.edit import CreateView
-from django.contrib.auth.forms import UserCreationForm
-
-
 urlpatterns = patterns('',
     url(r'^$', views.IndexView.as_view(), name='index'),
-    url('^', include('django.contrib.auth.urls')),
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
+    url(r'^home/$', views.HomeView.as_view(), name='home'),
+    url(
+        r'^login/$',
+        'django.contrib.auth.views.login',
+        kwargs={'template_name': 'login.html'}
+    ),
+    url('^', include('django.contrib.auth.urls')),
 )
