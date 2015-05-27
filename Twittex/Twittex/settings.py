@@ -80,7 +80,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'twittextestdb',
         'USER': 'django',
-        'PASSWORD': '',
+        'PASSWORD': 'twittex',
         'HOST': 'localhost',
         'PORT': '',
     }
