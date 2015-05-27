@@ -17,8 +17,6 @@
 		    	$('[data-toggle="tooltip"]').tooltip(); 
 			});
 		</script>
-
-
 	</head>
 	
 	<body>
@@ -36,29 +34,8 @@
 		    	</form>
 		        <li>
 		        	<form class="navbar-form navbar-left">
-		        		<button data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Post</button>
-		        		<div id="myModal" class="modal fade in">
-					        <div class="modal-dialog modal-sm">
-					            <div class="modal-content">
-					            	<div class="modal-header">
-					                    <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
-					                    <h4 class="modal-title">New Post</h4>
-					                </div>
-					                <div class="modal-body">
-					                	<div class="form-group">
-					                		<textarea class="form-control" rows="5" id="comment"></textarea>
-					                	</div>
-					                </div>
-					                <div class="modal-footer">
-					                    <div class="btn-group">
-					                        <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-					                        <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span> Save</button>
-					                    </div>
-					                </div>
-					 
-					            </div><!-- /.modal-content -->
-					        </div><!-- /.modal-dalog -->
-					    </div><!-- /.modal -->
+		        		<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Post</button>
+		        		
   					</form> 
 		        </li>
 		        <li>
@@ -105,12 +82,32 @@
     		</ul>
       		</div>
 		    </div>
-		  </div>
+
 		</nav>
-
-<div id="bottom_div" style="position:absolute; top:55px; left:10px">
-{% block content %}{% endblock content %}
-</div>
-
+		
+		<!-- Modal -->
+						  <div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+							
+							  <!-- Modal content-->
+							  <div class="modal-content">
+								<div class="modal-header">
+								  <button type="button" class="close" data-dismiss="modal">&times;</button>
+								  <h4 class="modal-title">Post</h4>
+								</div>
+								<div class="modal-body">
+									<form action="/newPost/" method="post">
+										{% csrf_token %}
+										<textarea class="form-control" rows="5" id="inhalt" name="inhalt"></textarea>
+								</div>
+								<div class="modal-footer">
+									<button type="submit" class="btn btn-default">Submit</button>
+									</form>
+									<a class="btn btn-default" href="/newPost/">go to Post</a>
+								</div>
+							  </div>
+							  
+							</div>
+						  </div>
 	</body>
 </html>
