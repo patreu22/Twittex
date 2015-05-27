@@ -1,7 +1,13 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.forms import ModelForm
+from .models import Posts
 
-class createPostForm(forms.Form):
-    your_name = forms.CharField(label='Your name', max_length=100)
+class newPostForm(ModelForm):
+    class Meta:
+        model = Posts
+        fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned'] 
+
+
     
 

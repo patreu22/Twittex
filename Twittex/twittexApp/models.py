@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class posts(models.Model):
+class Posts(models.Model):
     absender = models.CharField(max_length = 50)
     empfaenger = models.CharField(max_length = 50)
     inhalt = models.CharField(max_length = 140)
