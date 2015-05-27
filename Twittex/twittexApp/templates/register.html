@@ -7,12 +7,6 @@
 
 
 {% block content %}
-	<form action="" method="post">{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Create" />
-	</form>
-
-
 	<form action="" method="post" name="Login_Form" class="form-signin">
 			{% csrf_token %}      
 		    <h3 class="form-signin-heading">Yeah! Sign in for Twittex!</h3>
