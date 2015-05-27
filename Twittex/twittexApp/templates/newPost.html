@@ -1,11 +1,4 @@
-
-
-<div class="container">
-		
-	<form action="/newPost/" method="post">
-    		{% csrf_token %}
-    		{{ form.as_p }}
-  <!-- button for saving the task -->
-  <button type="submit" class="btn btn-default">Submit</button>
- </form>
- </div>
+<form action="newPost/" method="post">
+											{{ form.as_p }}
+										<button type="submit" class="btn btn-default">Submit</button>
+									</form>

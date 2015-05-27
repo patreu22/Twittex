@@ -12,7 +12,7 @@ class IndexView(TemplateView):
 class RegisterView(CreateView):
     template_name = 'register.html'
     model = User
-    success_url = '/'
+    success_url = '/home/'
     form_class = UserCreationForm
 
 class HomeView(TemplateView):

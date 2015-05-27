@@ -2,19 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Twittex {% block title %}{% endblock title %} </title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-		<script src="http://malsup.github.com/jquery.form.js"></script>
-	  	<script>
-			$(document).ready(function(){
-		    	$('[data-toggle="tooltip"]').tooltip(); 
-			});
-		</script>
-		
+	<title>Twittex</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
 	  	<style>		
 	  		.navbar-brand,
@@ -70,30 +63,8 @@
 		    	</form>
 		        <li>
 		        	<form class="navbar-form navbar-left">
-		        		<button data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Post</button>
-		        		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					        <div class="modal-dialog modal-sm">
-					            <div class="modal-content">
-					            	<div class="modal-header">
-					                    <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
-					                    <h4 class="modal-title">New Post</h4>
-					                </div>
-					                <div class="modal-body">
-					                	<form action="newPost/" method="post">
-											{{ form }}
-									<button type="submit" class="btn btn-default">Submit</button>
-								</form>
-					                </div>
-					                <div class="modal-footer">
-					                    <div class="btn-group">
-					                        <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-					                        <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span> Save</button>
-					                    </div>
-					                </div>
-					 
-					            </div><!-- /.modal-content -->
-					        </div><!-- /.modal-dalog -->
-					    </div><!-- /.modal -->
+		        		<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Post</button>
+		        		
   					</form> 
 		        </li>
 		        <li>
@@ -140,8 +111,30 @@
     		</ul>
       		</div>
 		    </div>
-		  </div>
 		</nav>
+		
+		<!-- Modal -->
+						  <div class="modal fade" id="myModal" role="dialog">
+							<div class="modal-dialog">
+							
+							  <!-- Modal content-->
+							  <div class="modal-content">
+								<div class="modal-header">
+								  <button type="button" class="close" data-dismiss="modal">&times;</button>
+								  <h4 class="modal-title">Post</h4>
+								</div>
+								<div class="modal-body">
+									<form action="newPost/" method="post">
+											{{ form.as_p }}
+									</form>
+								</div>
+								<div class="modal-footer">
+								  <a class="btn btn-default" href="/newPost/">go to Post</a>
+								</div>
+							  </div>
+							  
+							</div>
+						  </div>
 
 
 
