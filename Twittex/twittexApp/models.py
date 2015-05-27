@@ -7,4 +7,4 @@ class Posts(models.Model):
     inhalt = models.CharField(max_length = 140)
     hashtags = models.CharField(max_length = 100)
     mentioned = models.CharField(max_length = 140)
-
+    

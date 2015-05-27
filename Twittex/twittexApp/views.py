@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView
 from twittexApp.forms import UserCreationForm, AuthenticationForm
 from twittexApp.models import User, Posts
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -18,8 +19,16 @@ class RegisterView(CreateView):
 class HomeView(TemplateView):
     template_name = 'base.html'
 
+#called by submit post
+def newPost(request):
+    p = Posts(absender = str(request.user), inhalt = str(request.POST.get('inhalt')), empfaenger ='NULL', hashtags='NULL', mentioned='NULL')
+    p.save()
+    return redirect('/home/')
+    #return HttpResponse(" "+str(request.user)+" "+str(request.POST.get('inhalt'))+ " ")
+
 class createPost(CreateView):
     template_name = 'newPost.html'
     model = Posts
     fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned']
     success_url ='/home/'
+
