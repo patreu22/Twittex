@@ -1,0 +1,146 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Twittex</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+	  	<script>
+			$(document).ready(function(){
+		    	$('[data-toggle="tooltip"]').tooltip(); 
+			});
+		</script>
+
+	  	<style>		
+	  		.navbar-brand,
+			.navbar-nav li a {
+	    	line-height: 25px;
+	    	height: 25px;
+	    	padding-top: 5px;
+	    	}
+			body { padding-top: 40px; }
+				@media screen and (max-width: 768px) {
+				body { padding-top: 0px; }
+				}
+			.modal .modal-header {
+			  border-bottom: none;
+			  position: relative;
+			}
+			.modal .modal-header .btn {
+			  position: absolute;
+			  top: 0;
+			  right: 0;
+			  margin-top: 0;
+			  border-top-left-radius: 0;
+			  border-bottom-right-radius: 0;
+			}
+			.modal .modal-footer {
+			  border-top: none;
+			  padding: 0;
+			}
+			.modal .modal-footer .btn-group > .btn:first-child {
+			  border-bottom-left-radius: 0;
+			}
+			.modal .modal-footer .btn-group > .btn:last-child {
+			  border-top-right-radius: 0;
+			}
+		</style>
+
+	</head>
+	
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		    	<form class="navbar-form navbar-left">
+		     		<a class="navbar-brand" href="#">Twittex</a>
+		     	</form>
+		    </div>
+		    <div>
+		      <ul class="nav navbar-nav">
+		      	<form class="navbar-form navbar-left">
+		        	<li class="active"><a href="#">Timeline</a></li>
+		    	</form>
+		        <li>
+		        	<form class="navbar-form navbar-left">
+		        		<button data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Post</button>
+		        		<div id="myModal" class="modal fade in">
+					        <div class="modal-dialog modal-sm">
+					            <div class="modal-content">
+					            	<div class="modal-header">
+					                    <a class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span></a>
+					                    <h4 class="modal-title">New Post</h4>
+					                </div>
+					                <div class="modal-body">
+					                	<div class="form-group">
+					                		<textarea class="form-control" rows="5" id="comment"></textarea>
+					                	</div>
+					                </div>
+					                <div class="modal-footer">
+					                    <div class="btn-group">
+					                        <button class="btn btn-danger" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+					                        <button class="btn btn-primary"><span class="glyphicon glyphicon-check"></span> Save</button>
+					                    </div>
+					                </div>
+					 
+					            </div><!-- /.modal-content -->
+					        </div><!-- /.modal-dalog -->
+					    </div><!-- /.modal -->
+  					</form> 
+		        </li>
+		        <li>
+		        	<form class="navbar-form navbar-left">
+		        		<a href="#">Messages <span class="badge">0</span></a>
+		        	</form>
+		        </li>
+		        <li>
+		        	<form class="navbar-form navbar-left">
+		        		<a href="#">Notifications <span class="badge">0</span></a>
+		        	</form>
+		        </li>
+		      </ul>
+		    <ul class="nav navbar-nav navbar-right">
+		    	<li>
+		    		<form class="navbar-form navbar-left" role="search">
+  						<div class="form-group form-group-sm">
+  							<input type="text" class="form-control" placeholder="Search">
+  						</div>
+  						<button type="submit" class="btn btn-primary btn-sm">Search</button>
+  					</form>
+					<!-- <span class="glyphicons glyphicons-search"></span> -->
+				</li>
+		        <li>
+		        	<form class="navbar-form navbar-left">
+		        	<div class="dropdown">
+		        		<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+		        			Help
+		        			<span class="caret"></span>
+		        		</button>
+		        		<ul class="dropdown-menu">
+		        			<li><a href="#">Impressum</a></li>
+		        			<li><a href="#">Contact</a></li>
+		        			<li><a href="#">Help</a></li>
+		        		</ul>
+		        	</div>
+		        </form>
+		        </li>
+		        <li>
+		        	<form class="navbar-form navbar-left">
+		        		<a href="#"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+		        	</form>
+		        </li>
+    		</ul>
+      		</div>
+		    </div>
+		  </div>
+		</nav>
+
+<div id="bottom_div" style="position:absolute; top:55px; left:10px">
+{% block content %}{% endblock content %}
+</div>
+
+	</body>
+</html>
