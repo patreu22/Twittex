@@ -1,8 +1,28 @@
 {% extends "base.html" %}
+{% load static from staticfiles %}
+	 {% block extra_head %}
+	    <link href="{% static "css/login.css" %}" rel="stylesheet">
+	 {% endblock %}  
+
+
 
 {% block content %}
 	<form action="" method="post">{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" value="Create" />
 	</form>
+
+
+	<form action="" method="post" name="Login_Form" class="form-signin">
+			{% csrf_token %}      
+		    <h3 class="form-signin-heading">Yeah! Sign in for Twittex!</h3>
+			  <hr class="colorgraph"><br>
+			  
+			  <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required="" autofocus="" />
+			  <input type="password" class="form-control" id="id_password1" name="password1" placeholder="Password" required=""/>     		  
+			  <input type="password" class="form-control" id="id_password2" name="password2" placeholder="Password" required=""/>     		  
+			 
+			 <input type="hidden" name="next" value="/home" />
+			 <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Register" type="Submit">Register</button>  			
+		</form>			
 {% endblock content %}
