@@ -1,6 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% if request.user.is_authenticated %}Welcome '{{ request.user.username }}'
-{% else %}Not logged in{% endif %}
+<h1>My Post's</h1>
+        <ul>
+            {% for posts in object_list %}
+				{% if posts.absender =  request.user.username  %}
+				{{ request.user.username }} schrieb: 
+                <div class="Post">{{ posts.inhalt }}</div>
+			{% endif %}
+            {% endfor %}
+</ul>
 {% endblock content %}

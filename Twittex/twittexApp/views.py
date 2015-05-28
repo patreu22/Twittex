@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import TemplateView, CreateView
+from django.views.generic import TemplateView, CreateView, ListView
 from twittexApp.forms import UserCreationForm, AuthenticationForm
 from twittexApp.models import User, Posts
 from django.http import HttpResponse
@@ -16,9 +16,11 @@ class RegisterView(CreateView):
     success_url = '/home/'
     form_class = UserCreationForm
 
-class HomeView(TemplateView):
-    template_name = 'base.html'
-
+class HomeView(ListView):
+    template_name = 'home.html'
+    model = Posts
+    success_url ='/home/'
+	
 #called by submit post
 def newPost(request):
     p = Posts(absender = str(request.user), inhalt = str(request.POST.get('inhalt')), empfaenger ='NULL', hashtags='NULL', mentioned='NULL')

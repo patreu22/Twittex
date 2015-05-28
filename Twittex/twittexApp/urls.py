@@ -15,6 +15,11 @@ urlpatterns = patterns('',
         'django.contrib.auth.views.login',
         kwargs={'template_name': 'login.html'}
     ),
+	    url(
+        r'^logout/$',
+        'django.contrib.auth.views.logout',
+        kwargs={'next_page': '/','template_name': 'index.html'}
+    ),
     url('^', include('django.contrib.auth.urls')),
 )
 
