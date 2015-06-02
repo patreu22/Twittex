@@ -26,11 +26,3 @@ def newPost(request):
     p = Posts(absender = str(request.user), inhalt = str(request.POST.get('inhalt')), empfaenger ='NULL', hashtags='NULL', mentioned='NULL')
     p.save()
     return redirect('/home/')
-    #return HttpResponse(" "+str(request.user)+" "+str(request.POST.get('inhalt'))+ " ")
-
-class createPost(CreateView):
-    template_name = 'newPost.html'
-    model = Posts
-    fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned']
-    success_url ='/home/'
-

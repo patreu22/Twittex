@@ -9,7 +9,6 @@ urlpatterns = patterns('',
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
     url(r'^home/$', views.HomeView.as_view(), name='home'),
     url(r'^newPost/$', views.newPost, name = 'new_post'),
-    url(r'^createPost/$', views.createPost.as_view(), name = 'create_post'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',
