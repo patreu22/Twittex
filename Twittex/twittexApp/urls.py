@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^register/$', views.RegisterView.as_view(), name='register'),
     url(r'^home/$', views.HomeView.as_view(), name='home'),
+    url(r'^Nachrichten/$', views.NachrichtenView.as_view(), name='nachrichten'),
     url(r'^newPost/$', views.newPost, name = 'new_post'),
     url(
         r'^login/$',
