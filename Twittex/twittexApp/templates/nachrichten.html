@@ -2,27 +2,29 @@
 
 {% block content %}
 <div class="container">
-  <h3>Vertical Pills</h3>
+  <h3>Conversations</h3>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-2">
       <ul class="nav nav-pills nav-stacked">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Menu 1</a></li>
-        <li><a href="#">Menu 2</a></li>
-        <li><a href="#">Menu 3</a></li>
+        <li class="active"><a href="#">Neue Nachricht</a></li>
+		{% for msg in object_list %}
+			{% if msg.absender  %}
+				<li><a href="#">Menu 1</a></li>
+			{% endif %}
+        {% endfor %}
       </ul>
     </div>
-    <div class="col-md-9"> 
-      <h1>My Post's</h1>
+    <div class="col-md-10"> 
+      <h2>Your Conversation</h2>
         <ul>
-            {% for posts in object_list %}
-				{% if posts.absender =  request.user.username  %}
-				{{ request.user.username }} schrieb: 
-                <div class="Post">{{ posts.inhalt }}</div>
-			{% endif %}
-            {% endfor %}
+            {% for msg in object_list %}
+				{% if  msg.absender %}
+					<li><a href="#">Menu 1</a></li>
+				{% endif %}
+			{% endfor %}
 		</ul>
     </div>
+</div>
 </div>
 
 {% endblock content %}
