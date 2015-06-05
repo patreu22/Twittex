@@ -6,8 +6,5 @@ from .models import Posts
 class newPostForm(ModelForm):
     class Meta:
         model = Posts
-        fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned'] 
-
-
-    
+        fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned']
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, ListView
 from twittexApp.forms import UserCreationForm, AuthenticationForm
-from twittexApp.models import User, Posts
+from twittexApp.models import Posts, RegUser
 from django.http import HttpResponse
 
 
@@ -12,7 +12,7 @@ class IndexView(TemplateView):
 
 class RegisterView(CreateView):
     template_name = 'register.html'
-    model = User
+    model = RegUser
     success_url = '/login/'
     form_class = UserCreationForm
 
