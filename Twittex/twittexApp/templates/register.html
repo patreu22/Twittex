@@ -1,21 +1,30 @@
 {% extends "base.html" %}
 {% load static from staticfiles %}
-	 {% block extra_head %}
-	    <link href="{% static "css/login.css" %}" rel="stylesheet">
-	 {% endblock %}  
-
-
 
 {% block content %}
-	<form action="" method="post" name="Login_Form" class="form-signin">
-			{% csrf_token %}      
-		    <h3 class="form-signin-heading">Yeah! Sign Up for Twittex!</h3>
-			  <hr class="colorgraph"><br>
-			  
-			  <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required="" autofocus="" />
-			  <input type="password" class="form-control" id="id_password1" name="password1" placeholder="Password" required=""/>     		  
-			  <input type="password" class="form-control" id="id_password2" name="password2" placeholder="Password" required=""/>     		  
-			 
-			 <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Register" type="Submit">Register</button>  			
-		</form>			
+<body>
+        <h1>Register with Twittex</h1>
+
+        {% if registered %}
+        <strong>Thank you for Registering!</strong>
+        <a href="/">Return to the homepage.</a><br />
+        {% else %}
+        <strong>Register here!</strong><br />
+
+        <form id="user_form" method="post" action="/register/"
+                enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <!-- Display each form. The as_p method wraps each element in a paragraph
+                 (<p>) element. This ensures each element appears on a new line,
+                 making everything look neater. -->
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <!-- Provide a button to click to submit the form. -->
+            <input type="submit" name="submit" value="Register" />
+        </form>
+        {% endif %}
+    </body>
 {% endblock content %}

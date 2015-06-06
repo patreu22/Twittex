@@ -28,6 +28,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Media
+# Change to own media url
+#MEDIA_URL= 'D:\Documents\GitHub\Twittex\Twittex/'
+
 # Application definition
 
 INSTALLED_APPS = (
