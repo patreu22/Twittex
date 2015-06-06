@@ -7,4 +7,3 @@ class newPostForm(ModelForm):
     class Meta:
         model = Posts
         fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned']
-

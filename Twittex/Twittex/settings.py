@@ -72,7 +72,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Twittex.wsgi.application'
 
-AUTH_USER_MODEL = 'twittexApp.User'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
