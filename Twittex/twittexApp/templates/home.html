@@ -5,7 +5,7 @@
         <ul>
             {% for posts in object_list %}
 				{% if posts.absender =  request.user.username  %}
-				{{ request.user.username }} schrieb: 
+				{{ request.user.username }} schrieb:
                 <div class="Post">{{ posts.inhalt }}</div>
 			{% endif %}
             {% endfor %}

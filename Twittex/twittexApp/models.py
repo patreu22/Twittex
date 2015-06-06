@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 
 class Posts(models.Model):
     absender = models.CharField(max_length = 50)
@@ -7,16 +7,15 @@ class Posts(models.Model):
     inhalt = models.CharField(max_length = 140)
     hashtags = models.CharField(max_length = 100)
     mentioned = models.CharField(max_length = 140)
-    
 
 
-class RegUser(models.Model):
-    user = models.OneToOneField(User)
-    #photo
-    description = models.CharField(max_length = 140)
+class User(AbstractUser):
+    #photo = models.ImageField(upload_to='/profile_images/', default='/profile_images/no_photo.jpg')
+    desc = models.CharField(max_length = 140, default="foo")
     #followingList
     #myFollower
     #visibility(?)
+
 
 class Group(models.Model):
     groupID = models.CharField(max_length = 10)
