@@ -16,7 +16,7 @@ Get it work:
 Start it:  
 1) Run Postgresql with user: django pw: django and db: twittex_db
 
-2) Unter Twittex/Twittex/settings.py: MEDIA_ROOT = 'PFAD WO ALLE MEDIEN GESPEICHERT WERDEN SOLLEN' (Ganz unten)
+2) Unter Twittex/Twittex/settings.py: MEDIA_ROOT = '(PFAD WO ALLE MEDIEN GESPEICHERT WERDEN SOLLEN)/media' (Ganz unten)
 
 3) pip install Pillow
 
