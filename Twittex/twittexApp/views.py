@@ -62,10 +62,10 @@ class HomeView(ListView):
     model = Posts
     success_url = '/home/'
 
-class ProfileView(TemplateView):
+class ProfileDetailView(TemplateView):
     template_name = 'profile.html'
     success_url = '/profile/'
-	
+
 #called by submit post
 def newPost(request):
     p = Posts(absender = str(request.user), inhalt = str(request.POST.get('inhalt')), empfaenger ='NULL', hashtags='NULL', mentioned='NULL')

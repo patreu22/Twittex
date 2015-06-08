@@ -11,7 +11,7 @@ urlpatterns = patterns(
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^register/$', views.register, name='register'),
     url(r'^home/$', views.HomeView.as_view(), name='home'),
-    url(r'^profile/$', views.ProfileView.as_view(), name='profile'),
+    url(r'^profile/$', views.ProfileDetailView.as_view(), name='profile'),
     url(r'^newPost/$', views.newPost, name='new_post'),
     url(
         r'^login/$',

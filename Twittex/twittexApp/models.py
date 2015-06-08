@@ -15,8 +15,7 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='profile_images', blank=True)
     def __unicode__(self):
         return self.user.username
-    # photo = models.ImageField(upload_to='/profile_images/', default='/profile_images/no_photo.jpg')
-    # followingList
+   # followingList
     # myFollower
     # visibility(?)
 
