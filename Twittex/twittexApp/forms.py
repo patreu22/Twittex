@@ -26,6 +26,12 @@ class UserForm(forms.ModelForm):
 
         return self.cleaned_data
 
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+            raise forms.ValidationError(u'Username "%s" is already in use.' % username)
+        return username
+
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
