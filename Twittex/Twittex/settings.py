@@ -27,11 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Media
-# Change to own media url
-#MEDIA_URL= 'D:\Documents\GitHub\Twittex\Twittex/'
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -110,3 +105,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Media files
+MEDIA_ROOT = 'D:\Documents\GitHub\Twittex\Twittex\media'
+MEDIA_URL = '/media/'

@@ -12,7 +12,7 @@ class Posts(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     desc = models.CharField(max_length = 140, blank=True, null=True)
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to='profile_pictures', blank=True)
     def __unicode__(self):
         return self.user.username
    # followingList

@@ -5,6 +5,8 @@
 <ul>
     Hello {{ user.username }}!
     {{ user.userprofile.desc }}
-    <img src="{{ user.userprofile.picture }}">
+    <div>
+        <img class="img-responsive" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/>
+    </div>
 </ul>
 {% endblock content %}
