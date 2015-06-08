@@ -20,7 +20,7 @@ class Nachrichten(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     desc = models.CharField(max_length = 140, blank=True, null=True)
-    picture = models.ImageField(upload_to='profile_pictures', blank=True)
+    picture = models.ImageField(upload_to='profile_pictures', blank=True, default='no_photo.jpg')
     def __unicode__(self):
         return self.user.username
     # followingList
