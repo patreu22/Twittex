@@ -3,7 +3,7 @@ from itertools import chain
 from django.db.models import Q
 from django.views.generic import TemplateView, CreateView, ListView
 from twittexApp.forms import UserCreationForm, AuthenticationForm
-from twittexApp.models import User, Posts, Nachrichten
+from twittexApp.models import User, Posts, Nachrichten, RegUser
 from django.http import HttpResponse
 
 
