@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm
 from .models import Posts, User, UserProfile
 
+
 class newPostForm(ModelForm):
     class Meta:
         model = Posts

@@ -12,6 +12,9 @@ urlpatterns = patterns(
     url(r'^register/$', views.register, name='register'),
     url(r'^home/$', views.HomeView.as_view(), name='home'),
     url(r'^profile/$', views.ProfileDetailView.as_view(), name='profile'),
+    url(r'^Messages/NewMsg/$', views.NewMsgView.as_view(), name='newMsg'),
+    url(r'^Messages/(?P<author>[\w-]+)/$', views.NachrichtenView.as_view(), name='messages'),
+    url(r'^SendNewMsg/$', views.sendMsg, name='sendMsg'),
     url(r'^newPost/$', views.newPost, name='new_post'),
     url(
         r'^login/$',
