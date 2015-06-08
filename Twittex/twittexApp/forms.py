@@ -7,7 +7,7 @@ from .models import Posts, User, UserProfile
 class newPostForm(ModelForm):
     class Meta:
         model = Posts
-        fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned']
+        fields = ['absender', 'inhalt', 'hashtags', 'mentioned', 'datum']
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
