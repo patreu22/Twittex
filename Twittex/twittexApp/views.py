@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from itertools import chain
+from django.db.models import Q
 from django.views.generic import TemplateView, CreateView, ListView
 from twittexApp.forms import UserCreationForm, AuthenticationForm
 from twittexApp.models import User, Posts, Nachrichten
@@ -31,8 +32,12 @@ def newPost(request):
 #Nachrichten
 class NewMsgView(ListView):
     template_name = 'newMsg.html'
+    context_object_name = 'conversations'
     def get_queryset(self):
-        queryset = Nachrichten.objects.all()
+        usr = str(self.request.user)
+        q = Nachrichten.objects.filter(Q(absender = usr)
+                                              | Q(empfaenger = usr)).exclude(empfaenger = usr).values('empfaenger').distinct('empfaenger')
+        return q
 
 def sendMsg(request):
     e = str(request.POST.get('recipient'))
@@ -42,8 +47,17 @@ def sendMsg(request):
     
 class NachrichtenView(ListView):
     template_name = 'nachrichten.html'
+    
     def get_queryset(self):
-        q1 = Nachrichten.objects.filter(empfaenger = str(self.request.user))
-        q2 = Nachrichten.objects.filter(absender = str(self.request.user))
-        return list(chain(q2, q1))
+        usr = str(self.request.user)
+        q = Nachrichten.objects.filter((Q(empfaenger = usr) & Q(absender = str(self.kwargs['author'])))
+                                        | (Q(absender = usr) & Q(empfaenger = str(self.kwargs['author']))))
+        return q
+
+    def get_context_data(self, *args, **kwargs):
+        context = super(NachrichtenView, self).get_context_data(*args, **kwargs)
+        usr = str(self.request.user)
+        context['conversations'] = Nachrichten.objects.filter(Q(absender = usr)
+                                                              | Q(empfaenger = usr)).exclude(empfaenger = usr).values('empfaenger').distinct('empfaenger')
+        return context 
     
