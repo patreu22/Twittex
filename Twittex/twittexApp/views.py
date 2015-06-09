@@ -64,8 +64,9 @@ class HomeView(ListView):
     model = Posts
     success_url = '/home/'
 
-class ProfileDetailView(TemplateView):
+class ProfileDetailView(ListView):
     template_name = 'profile.html'
+    model = Posts
     success_url = '/profile/'
 
 #called by submit post

@@ -1,12 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>My Profile</h1>
-<ul>
-    Hello {{ user.username }}!
-    {{ user.userprofile.desc }}
-    <div>
-        <img class="img-responsive" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/>
-    </div>
-</ul>
+	<div class="well">
+		<h1>Yeah, welcome to {{ user.username }}'s profile!</h1>
+	</div>
+
+		<table>
+			<tr>
+				<td class="well" width="30%"><img class="img-responsive img-rounded" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/>
+				Description:<br/>{{ user.userprofile.desc }}</td>
+				<td>
+					<div class="well well-sm">
+					<h2>@{{ user.username }}'s posts:</h2>
+					<table>
+					{% for posts in object_list %}
+						{% if posts.absender =  request.user.username  %}
+						<tr>
+							<td><a href="/profile/{{ request.user.username }}">@{{ request.user.username }}</a>
+                			<div class="Post">{{ posts.inhalt }}</div><br/></td>
+						</tr>
+						{% endif %}
+           	 		{% endfor %}
+            		</table>
+				</div>
+                </td>
+			</tr>
+		</table>
 {% endblock content %}

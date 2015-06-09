@@ -1,13 +1,25 @@
 {% extends "base.html" %}
-
+{% load staticfiles %}
+{% block extra_head %}
+	<link href="{% static "css/home.css" %}" rel="stylesheet">
+	{% endblock %}   
 {% block content %}
+
+<div>
 <h1 class="well text-center">What's new on your Twittex feed?</h1>
             {% for posts in object_list %}
 				{% if posts.absender =  request.user.username  %}
-				<div class="well">
-					{{ request.user.username }} schrieb:
-                	<div class="Post">{{ posts.inhalt }}</div>
+				<div class="well well-sm">
+					<table>
+						<tr>
+							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/></td>
+							<td><a href="/profile/{{ request.user.username }}">@{{request.user.username }}</a><br/>
+                			{{ posts.inhalt }}
+                			</td>
+						</tr>
+					</table>
 				</div>
 				{% endif %}
             {% endfor %}
+</div>
 {% endblock content %}
