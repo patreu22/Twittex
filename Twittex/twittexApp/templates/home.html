@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>My Post's</h1>
-        <ul>
+<h1 class="well text-center">What's new on your Twittex feed?</h1>
             {% for posts in object_list %}
 				{% if posts.absender =  request.user.username  %}
-				{{ request.user.username }} schrieb:
-                <div class="Post">{{ posts.inhalt }}</div>
-			{% endif %}
+				<div class="well">
+					{{ request.user.username }} schrieb:
+                	<div class="Post">{{ posts.inhalt }}</div>
+				</div>
+				{% endif %}
             {% endfor %}
-</ul>
 {% endblock content %}

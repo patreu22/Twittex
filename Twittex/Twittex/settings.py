@@ -107,5 +107,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Media files
-MEDIA_ROOT = 'D:\Documents\GitHub\Twittex\Twittex\media'
+MEDIA_ROOT = '/Users/Patrick/Desktop/Twittex/Twittex/media'
 MEDIA_URL = '/media/'
