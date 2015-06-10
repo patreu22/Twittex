@@ -2,31 +2,37 @@
 {% load static from staticfiles %}
      {% block extra_head %}
         <link href="{% static "css/login.css" %}" rel="stylesheet">
-     {% endblock %}  
-{% block content %}
-<body>
-        <h1>Register with Twittex</h1>
+     {% endblock %}   
 
+{% block content %}
         {% if registered %}
         <strong>Thank you for Registering!</strong>
         <a href="/">Return to the homepage.</a><br />
         {% else %}
-        <strong>Register here!</strong><br />
+        <div class = "container">
+            <div class="wrapper">
+                <form id="user_form" class="form-signin" method="post" action="/register/" enctype="multipart/form-data">
+                    {% csrf_token %}      
+                    <h3 class="form-signin-heading"> Yeah! Just one more step to register!</h3>
+                     <hr class="colorgraph"><br>
+                  
+                    <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required="" autofocus="" />
 
-        <form id="user_form" method="post" action="/register/"
-                enctype="multipart/form-data">
+                    <input id="id_email" class="form-control" maxlength="254" name="email" placeholder="E-Mail" required="" type="email" /><br/>
 
-            {% csrf_token %}
+                    <input id="id_password" name="password" type="password" placeholder="Password" class="form-control" />
 
-            <!-- Display each form. The as_p method wraps each element in a paragraph
-                 (<p>) element. This ensures each element appears on a new line,
-                 making everything look neater. -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
+                    <input id="id_password2" name="password2" placeholder="Confirm password" type="password" class="form-control" />
 
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Register" />
-        </form>
+                    <input id="id_desc" maxlength="140" name="desc" type="text" class="form-control" placeholder="(Optional) Add a description about yourself"/><br/>
+
+                    <p>Add a profile picture:
+                    <input id="id_picture" name="picture" class="form-control" type="file" placeholder="(Optional) Upload a profile picture"/></p>
+
+                    <input type="hidden" name="next" value="/home" />
+                    <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">Sign Up</button>             
+                </form>         
+            </div>
+        </div>
         {% endif %}
-    </body>
 {% endblock content %}
