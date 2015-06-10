@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, CreateView, ListView
 from twittexApp.forms import UserCreationForm, AuthenticationForm
-from twittexApp.models import User, Posts
+from twittexApp.models import User, Posts, EmailForm
 from django.http import HttpResponse
 import smtplib
-
+from django.core.mail import send_mail
 
 # Create your views here.
 class IndexView(TemplateView):
@@ -28,40 +28,16 @@ def newPost(request):
     p.save()
     return redirect('/home/')
 
-def contact(request):
-    if request.method == 'GET':
-        form = ContactForm()
-    else:
-        # A POST request: Handle Form Upload
-        form = ContactForm(request.POST)
- 
-        # If data is valid, proceeds to create a new post and redirect the user
+def sendmail(request):
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-
-            SERVER = "localhost"
-
-            FROM = email
-            TO = ["Twittex@yahoo.com"]
-
-            SUBJECT = "Mail from" + name
-
-            TEXT = message
-
-            # Prepare actual message
-
-            mail = """\
-            From: %s
-            To: %s
-            Subject: %s
-
-            %s
-            """ % (FROM, ", ".join(TO), SUBJECT, TEXT)
-
-            # Send the mail
-
-            server = smtplib.SMTP(SERVER)
-            server.sendmail(FROM, TO, mail)
-            server.quit()
+            fullemail = name + " " + "<" + email + ">"
+            send_mail(subject, message, email, ['twittexsn@gmail.com'])
+            return redirect('/thanks/')
+        else:
+            return redirect('/contact/')

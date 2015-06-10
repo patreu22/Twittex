@@ -1,8 +1,26 @@
 {% extends "base.html" %}
-
-	{% block title %}Contact{% endblock %}
-		<form action="" method="post">
-			{% csrf_token %}
-			{{ form.as_p }}
-			<input type='submit' value='Submit'/>
-		</form>
+    {% block title %}Contact Us{% endblock title %}
+    {% block content %}
+      <form method="post" action="/contact/send/">
+      	{% csrf_token %}
+        <div class="name">
+          <label class="label">Name  <span class="required">*</span></label>
+          <input name= "name" class="inputtext" maxlength="255" size="12" />
+        </div>
+        <div class="email">
+          <label class="label">Email Address  <span class="required">*</span></label>
+          <input name="email" class="inputtext" type="text" maxlength="255" size="35" /> 
+        </div>
+        <div class="subject">
+          <label class="label">Subject  <span class="required">*</span></label>
+          <input name="subject" class="inputtext" type="text" maxlength="255" size="45" />
+        </div>
+        <div class="message">
+          <label class="label">Message  <span class="required">*</span></label>
+          <textarea name="message" class="inputtextarea" rows="11" cols="45"></textarea>
+        </div>
+        <div class="button">
+          <input class="submitform" type="submit" name="submitform" value="Send Message" />
+        </div>
+      </form>	
+    {% endblock content %}

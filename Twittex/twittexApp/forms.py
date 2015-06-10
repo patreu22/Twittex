@@ -7,14 +7,6 @@ class newPostForm(ModelForm):
     class Meta:
         model = Posts
         fields = ['absender', 'empfaenger', 'inhalt', 'hashtags', 'mentioned']
-
-class ContactForm(forms.Form):
-    name = forms.CharField()
-    email = forms.CharField()
-    message = forms.CharField()
-
-        def __unicode__(self):
-        return self.name
     
 
 
