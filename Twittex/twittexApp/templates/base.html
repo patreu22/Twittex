@@ -34,7 +34,7 @@
 		    	</form>
                   <li>
 		        	<form class="navbar-form navbar-left">
-		        		<a href="/profile/">My Profile</a>
+		        		<a href="/profile/{{ request.user.username }}">{{ request.user.username }}'s Profile</a>
 		        	</form>
 		        </li>
 		        <!--	<form class="navbar-form navbar-left">
