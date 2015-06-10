@@ -8,8 +8,11 @@ from django.http import HttpResponse
 
 
 # Create your views here.
-class IndexView(TemplateView):
-    template_name = 'index.html'
+def IndexView(request):
+    if request.user.is_authenticated():
+        return redirect('/home')
+    else:
+        return render_to_response('index.html')
 
 
 def register(request):

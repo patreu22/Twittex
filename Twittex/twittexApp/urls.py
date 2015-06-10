@@ -8,7 +8,7 @@ from twittexApp import views
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^$', views.IndexView, name='index'),
     url(r'^register/$', views.register, name='register'),
     url(r'^home/$', views.HomeView.as_view(), name='home'),
     url(r'^profile/(?P<username>[A-Za-z0-9\w|\W]+)$', views.ProfileDetailView, name='profile'),

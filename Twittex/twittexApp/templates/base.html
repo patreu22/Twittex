@@ -38,7 +38,9 @@
 		     		<a class="navbar-brand" href="#">Twittex</a>
 		     	</form>
 		    </div>
+
 		    <div>
+              {% if user.is_authenticated %}
 		      <ul class="nav navbar-nav">
 		      	<form class="navbar-form navbar-left">
 		        	<li class="active"><a href="/home/">Timeline</a></li>
@@ -68,7 +70,9 @@
 		        	</form>
 		        </li>
 		      </ul>
+            {% endif %}
 		    <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
 		    	<li>
 		    		<form class="navbar-form navbar-left" role="search">
   						<div class="form-group form-group-sm">
@@ -78,6 +82,7 @@
   					</form>
 					<!-- <span class="glyphicons glyphicons-search"></span> -->
 				</li>
+            {% endif %}
 		        <li>
 		        	<form class="navbar-form navbar-left">
 		        	<div class="dropdown">
