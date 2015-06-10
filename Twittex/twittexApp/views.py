@@ -65,25 +65,6 @@ class HomeView(ListView):
     success_url = '/home/'
 
 
-"""
-class ProfileDetailView(ListView):
-    template_name = 'profile.html'
-    model = Posts
-    success_url = '/profile/'
-"""
-
-"""
-class ProfileDetailView(DetailView):
-    template_name = 'profile.html'
-    slug_field = 'username'
-    model = User
-
-    def get_queryset(self):
-        posts = Posts.objects.all
-        return posts
-"""
-
-
 def ProfileDetailView(request, username):
     posts = Posts.objects.all()
     user = User.objects.get(username=username)
