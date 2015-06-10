@@ -29,8 +29,14 @@ class UserForm(forms.ModelForm):
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
-            raise forms.ValidationError(u'Username "%s" is already in use.' % username)
+            raise forms.ValidationError(u'Email "%s" is already in use.' % username)
         return username
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.exclude(pk=self.instance.pk).filter(email=email).exists():
+            raise forms.ValidationError(u'Username "%s" is already in use.' % email)
+        return email
 
 
 class UserProfileForm(forms.ModelForm):
