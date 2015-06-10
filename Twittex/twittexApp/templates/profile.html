@@ -2,7 +2,11 @@
 
 {% block content %}
 	<div class="well">
-		<h1>Yeah, welcome to {{ user.username }}'s profile!</h1>
+        {% if user.username = request.user.username %}
+            <h1>Welcome to your profile!</h1>
+        {% else %}
+		    <h1>Welcome to {{ user.username }}'s profile!</h1>
+        {% endif %}
 	</div>
 
 		<table>
@@ -14,9 +18,9 @@
 					<h2>@{{ user.username }}'s posts:</h2>
 					<table>
 					{% for posts in object_list %}
-						{% if posts.absender =  request.user.username  %}
+						{% if posts.absender = user.username  %}
 						<tr>
-							<td><a href="/profile/{{ request.user.username }}">@{{ request.user.username }}</a>
+							<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a>
                 			<div class="Post">{{ posts.inhalt }}</div><br/></td>
 						</tr>
 						{% endif %}
