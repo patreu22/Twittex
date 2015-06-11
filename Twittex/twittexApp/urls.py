@@ -16,6 +16,7 @@ urlpatterns = patterns(
     url(r'^Messages/(?P<author>[\w-]+)/$', views.NachrichtenView.as_view(), name='messages'),
     url(r'^SendNewMsg/$', views.sendMsg, name='sendMsg'),
     url(r'^newPost/$', views.newPost, name='new_post'),
+	url(r'^search/$', views.search, name='search'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',
