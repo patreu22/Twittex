@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect, RequestContext, render_to_response, Http404
 from itertools import chain
 from django.db.models import Q
-from django.views.generic import TemplateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm
-from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm
+from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, models
 from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
@@ -73,6 +73,22 @@ def ProfileDetailView(request, username):
     posts = Posts.objects.all()
     user = User.objects.get(username=username)
     return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request})
+
+
+class ProfileEditView(UpdateView):
+    template_name = 'editprofile.html'
+    success_url = '/'
+    fields = ['desc', 'picture']
+
+    def get_object(self):
+        return UserProfile.objects.get(user=self.request.user)
+
+    def dispatch(self, request, *args, **kwargs):
+        # check if there is some video onsite
+        if self.kwargs['username'] != request.user.username:
+            return redirect('/')
+        else:
+            return super(ProfileEditView, self).dispatch(request, *args, **kwargs)
 
 
 # called by submit post

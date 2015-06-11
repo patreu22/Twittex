@@ -11,7 +11,7 @@
 
 		<table>
 			<tr>
-				<td class="well" width="30%"><img class="img-responsive img-rounded" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/>
+				<td class="well" width="30%"><img class="img-responsive img-rounded" src="{{ user.userprofile.getPicture }}" alt="Profile Picture"/>
 				Description:<br/>{{ user.userprofile.desc }}</td>
 				<td>
 					<div class="well well-sm">
@@ -30,4 +30,7 @@
                 </td>
 			</tr>
 		</table>
+        {% if request.user = user %}
+            <a href="edit" class="btn btn-primary btn-sm dropdown-toggle" role="button">Edit Profile</a>
+        {% endif %}
 {% endblock content %}
