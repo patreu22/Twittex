@@ -1,4 +1,11 @@
-<h1>Edit profile</h1>
+{% extends "base.html" %}
+{% load static from staticfiles %}
+     {% block extra_head %}
+        <link href="{% static "css/login.css" %}" rel="stylesheet">
+     {% endblock %}
+
+{% block content %}
+<h1 class="well">Edit Profil</h1>
 <form method="post" class="form" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
@@ -10,3 +17,4 @@
     {% endfor %}
     <input type="submit" value="Edit my Profile" />
 </form>
+{% endblock content %}

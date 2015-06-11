@@ -76,12 +76,18 @@ def ProfileDetailView(request, username):
 
 class ProfileEditView(UpdateView):
     template_name = 'editprofile.html'
-    model = UserProfile
     success_url = '/'
     fields = ['desc', 'picture']
 
     def get_object(self):
         return UserProfile.objects.get(user=self.request.user)
+
+    def dispatch(self, request, *args, **kwargs):
+        # check if there is some video onsite
+        if self.kwargs['username'] != request.user.username:
+            return redirect('/')
+        else:
+            return super(ProfileEditView, self).dispatch(request, *args, **kwargs)
 
 
 # called by submit post
