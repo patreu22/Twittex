@@ -30,4 +30,7 @@
                 </td>
 			</tr>
 		</table>
+        {% if request.user = user %}
+            <a href="edit" class="btn btn-primary btn-sm dropdown-toggle" role="button">Edit Profile</a>
+        {% endif %}
 {% endblock content %}

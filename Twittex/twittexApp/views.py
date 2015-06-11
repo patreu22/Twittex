@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, RequestContext, render_to_response, Http404
 from itertools import chain
 from django.db.models import Q
-from django.views.generic import TemplateView, CreateView, ListView, DetailView
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
 from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm
 from twittexApp.models import Posts, User, UserProfile, Nachrichten
 from django.http import HttpResponse
@@ -72,6 +72,16 @@ def ProfileDetailView(request, username):
     posts = Posts.objects.all()
     user = User.objects.get(username=username)
     return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request})
+
+
+class ProfileEditView(UpdateView):
+    template_name = 'editprofile.html'
+    model = UserProfile
+    success_url = '/'
+    fields = ['desc', 'picture']
+
+    def get_object(self):
+        return UserProfile.objects.get(user=self.request.user)
 
 
 # called by submit post
