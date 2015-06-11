@@ -4,9 +4,6 @@
   <link href="{% static "css/messages.css" %}" rel="stylesheet">
   {% endblock %} 
 {% block content %}
-<table>
-  <tr>
-    <td class="well" width="70%">
       <div class="container">
         <h3>Conversations</h3>
         <div class="row">
@@ -17,10 +14,8 @@
       				<li><a href="/Messages/{{conv.empfaenger}}">{{conv.empfaenger}} </a></li>
               {% endfor %}
             </ul>
-          </div>
-    </td>
-    <td>
-          <div> 
+          </div>          
+        <div> 
             <h2>Your Conversation</h2>
               <ul>
                   {% for msg in object_list %}
@@ -47,8 +42,5 @@
           </div>
       </div>
       </div>
-    </td>
-  </tr>
-</table>
 
 {% endblock content %}

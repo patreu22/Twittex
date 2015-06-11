@@ -15,7 +15,7 @@ def IndexView(request):
         return render_to_response('index.html')
 
 
-def register(request):
+def register(request):  
     # Like before, get the request's context.
     context = RequestContext(request)
 
