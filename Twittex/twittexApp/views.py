@@ -7,7 +7,6 @@ from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, 
 from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse_lazy
 
 # Create your views here.
 def IndexView(request):
