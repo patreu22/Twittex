@@ -15,9 +15,6 @@ def IndexView(request):
     else:
         return render_to_response('index.html')
 
-def ImpressumView(TemplateView):
-    template_name = 'impressum.html'
-
 
 def register(request):  
     # Like before, get the request's context.
