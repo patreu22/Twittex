@@ -74,10 +74,12 @@
 		    <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
 		    	<li>
-		    		<form class="navbar-form navbar-left" role="search">
+		    		<form class="navbar-form navbar-left" role="search" action ="/search/" method= "get">
   						<div class="form-group form-group-sm">
-  							<input type="text" class="form-control" placeholder="Search">
+  							<input type="text" class="form-control" name = "q">
   						</div>
+
+
   						<button type="submit" class="btn btn-primary btn-sm">Search</button>
   					</form>
 					<!-- <span class="glyphicons glyphicons-search"></span> -->

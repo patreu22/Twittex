@@ -118,3 +118,9 @@ class NachrichtenView(ListView):
             'empfaenger').distinct('empfaenger')
         return context 
     
+def search(request):
+        q = request.GET['q']
+        users = User.objects.filter(username__icontains = q)
+        postss = Posts.objects.filter(inhalt__icontains = q)
+        return render(request, 'search_results.html',
+            {'users': users, 'postss' : postss,  'query': q})
