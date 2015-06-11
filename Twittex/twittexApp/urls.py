@@ -19,6 +19,7 @@ urlpatterns = patterns(
     url(r'^Messages/(?P<author>[\w-]+)/$', views.NachrichtenView.as_view(), name='messages'),
     url(r'^SendNewMsg/$', views.sendMsg, name='sendMsg'),
     url(r'^newPost/$', views.newPost, name='new_post'),
+    url(r'^delete/(?P<pk>[A-Za-z0-9\w|\W]+)$', views.DeleteView.as_view(), name='delete'),
 	url(r'^search/$', views.search, name='search'),
     url(
         r'^login/$',

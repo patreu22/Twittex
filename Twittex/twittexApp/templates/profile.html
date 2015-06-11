@@ -22,6 +22,7 @@
 						<tr>
 							<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a>
                 			<div class="Post">{{ posts.inhalt }}</div><br/></td>
+                            <a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
 						</tr>
 						{% endif %}
            	 		{% endfor %}
