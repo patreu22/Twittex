@@ -33,7 +33,7 @@ urlpatterns = patterns(
     url(r'^contact/send/$', views.sendmail),
     url(r'^thanks/$', TemplateView.as_view(template_name='thanks.html'), name='thanks'),
     url(r'^contact/$', TemplateView.as_view(template_name='contact.html'), name='contact'),
-    url(r'împressum/$', views.ImpressumView, name='impressum'),
+    url(r'^impressum/$', TemplateView.as_view(template_name='impressum.html'), name='impressum'),
 )
 
 if settings.DEBUG:
