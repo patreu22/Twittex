@@ -106,6 +106,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'twittexsn@gmail.com'
+EMAIL_HOST_PASSWORD = 'Twittex2015'
+EMAIL_USE_TLS = True
+
 # Media files
 MEDIA_ROOT = '/Users/Patrick/Desktop/Twittex/Twittex/media'
 MEDIA_URL = '/media/'
