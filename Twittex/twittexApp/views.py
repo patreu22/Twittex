@@ -36,8 +36,8 @@ def sendmail(request):
             email = form.cleaned_data['email']
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
-            fullemail = name + " " + "<" + email + ">"
-            send_mail(subject, message, email, ['twittexsn@gmail.com'])
+            content = name + " " + "<" + email + ">" + " send the following message: \n \n " + message
+            send_mail(subject, content, email, ['twittexsn@gmail.com'])
             return redirect('/thanks/')
         else:
             return redirect('/contact/')
