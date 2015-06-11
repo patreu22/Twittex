@@ -72,7 +72,7 @@ class HomeView(ListView):
 def ProfileDetailView(request, username):
     posts = Posts.objects.all()
     user = User.objects.get(username=username)
-    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request})
+    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request}, context_instance=RequestContext(request))
 
 
 class ProfileEditView(UpdateView):
