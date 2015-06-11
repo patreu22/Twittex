@@ -3,9 +3,10 @@ from itertools import chain
 from django.db.models import Q
 from django.views.generic import TemplateView, CreateView, ListView, DetailView
 from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm
-from twittexApp.models import Posts, User, UserProfile, Nachrichten
+from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm
 from django.http import HttpResponse
-
+import smtplib
+from django.core.mail import send_mail
 
 # Create your views here.
 def IndexView(request):
@@ -80,6 +81,19 @@ def newPost(request):
     p.save()
     return redirect('/home/')
 
+def sendmail(request):
+    if request.method == 'POST':
+        form = EmailForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+            content = name + " " + "<" + email + ">" + " send the following message: \n \n " + message
+            send_mail(subject, content, email, ['twittexsn@gmail.com'])
+            return redirect('/thanks/')
+        else:
+            return redirect('/contact/')
 
 #Nachrichten
 class NewMsgView(ListView):
@@ -117,6 +131,7 @@ class NachrichtenView(ListView):
                                                               | Q(empfaenger=usr)).exclude(empfaenger=usr).values(
             'empfaenger').distinct('empfaenger')
         return context 
+
     
 def search(request):
         q = request.GET['q']

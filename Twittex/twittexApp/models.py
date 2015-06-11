@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django import forms
 from datetime import datetime
+
 
 class Posts(models.Model):
     absender = models.CharField(max_length=50)
@@ -15,6 +17,13 @@ class Nachrichten(models.Model):
     empfaenger = models.CharField(max_length = 50)
     inhalt = models.CharField(max_length = 140)
     datum = models.DateTimeField(default=datetime.now, blank=True)
+    
+
+class EmailForm(forms.Form):
+    name = forms.CharField(max_length = 255)
+    email = forms.EmailField()
+    subject = forms.CharField(max_length = 255)
+    message = forms.CharField()
 
 
 class UserProfile(models.Model):

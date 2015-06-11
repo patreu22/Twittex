@@ -4,6 +4,8 @@ from django.conf import settings
 from django.conf.urls import patterns, url, include, static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from twittexApp import views
+from django.conf import settings
+from django.views.generic.base import TemplateView
 
 
 urlpatterns = patterns(
@@ -28,7 +30,9 @@ urlpatterns = patterns(
         kwargs={'next_page': '/','template_name': 'index.html'}
     ),
     url('^', include('django.contrib.auth.urls')),
-
+    url(r'^contact/send/$', views.sendmail),
+    url(r'^thanks/$', TemplateView.as_view(template_name='thanks.html'), name='thanks'),
+    url(r'^contact/$', TemplateView.as_view(template_name='contact.html'), name='contact'),
 )
 
 if settings.DEBUG:
