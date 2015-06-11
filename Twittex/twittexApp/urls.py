@@ -27,6 +27,7 @@ urlpatterns = patterns(
         kwargs={'next_page': '/','template_name': 'index.html'}
     ),
     url('^', include('django.contrib.auth.urls')),
+
 )
 
 if settings.DEBUG:
