@@ -131,5 +131,3 @@ class NachrichtenView(ListView):
                                                               | Q(empfaenger=usr)).exclude(empfaenger=usr).values(
             'empfaenger').distinct('empfaenger')
         return context 
-    
->>>>>>> Test_Natalie

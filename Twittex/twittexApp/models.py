@@ -42,4 +42,3 @@ class Group(models.Model):
     title = models.CharField(max_length = 50)
     admin = models.CharField(max_length = 50)
     # members
->>>>>>> Test_Natalie
