@@ -16,7 +16,7 @@ def IndexView(request):
         return render_to_response('index.html')
 
 
-def register(request):
+def register(request):  
     # Like before, get the request's context.
     context = RequestContext(request)
 
@@ -131,3 +131,10 @@ class NachrichtenView(ListView):
                                                               | Q(empfaenger=usr)).exclude(empfaenger=usr).values(
             'empfaenger').distinct('empfaenger')
         return context 
+    
+def search(request):
+        q = request.GET['q']
+        users = User.objects.filter(username__icontains = q)
+        postss = Posts.objects.filter(inhalt__icontains = q)
+        return render(request, 'search_results.html',
+            {'users': users, 'postss' : postss,  'query': q})

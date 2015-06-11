@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Search results for '{{query}}': </h1>
+{% if query %}
+
+
+
+{% if users %}
+    <p>Found {{ users|length }} user{{ users|pluralize }}:</p>
+    <ul>
+        {% for user in users %}
+		<li> <a href="/profile/{{ user.username }}">{{ user.username.title }}</a> </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if postss %}
+    <p>Found {{ postss|length }} post{{ postss|pluralize }}:</p>
+    <ul>
+        {% for posts in postss %}
+				<div class="well well-sm">
+					<table>
+						<tr>
+							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/></td>
+							<td><a href="/profile/{{ posts.absender }}">@{{posts.absender }}</a><br/>
+                			{{ posts.inhalt }}
+                			</td>
+						</tr>
+					</table>
+				</div>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+	{% if postss|length = 0 and users|length = 0 %}
+		<p> No matching results found for <strong>'{{query}}'</strong> </p>
+	{% endif %}
+{% endif %}
+{% endblock content %}
