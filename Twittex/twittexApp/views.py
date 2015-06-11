@@ -97,6 +97,13 @@ def newPost(request):
     #hashtag search from http://stackoverflow.com/questions/6331497
     hashtags = {tag.strip("#") for tag in content.split() if tag.startswith("#")}
     mentioned = {tag.strip("@") for tag in content.split() if tag.startswith("@")}
+
+    print(mentioned)
+    for username in mentioned:
+        user = User.objects.get(username=username)
+        user.userprofile.mentioned_count += 1
+        user.userprofile.save()
+
     p = Posts(absender=str(request.user), inhalt=content, hashtags=str(hashtags), mentioned=str(mentioned))
     p.save()
     return redirect('/home/')

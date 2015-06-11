@@ -66,7 +66,7 @@
 		        </li>
 		        <li>
 		        	<form class="navbar-form navbar-left">
-		        		<a href="#">Notifications <span class="badge">0</span></a>
+		        		<a href="#">Notifications <span class="badge">{{ user.userprofile.mentioned_count }}</span></a>
 		        	</form>
 		        </li>
 		      </ul>
@@ -100,11 +100,20 @@
 		        	</div>
 		        </form>
 		        </li>
+
+                {% if user.is_authenticated %}
 		        <li>
 		        	<form class="navbar-form navbar-left">
 		        		<a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
 		        	</form>
 		        </li>
+                {% else %}
+                <li>
+		        	<form class="navbar-form navbar-left">
+		        		<a href="/login"><span class="glyphicon glyphicon-log-out"></span>Login</a>
+		        	</form>
+		        </li>
+                {% endif %}
     		</ul>
       		</div>
 		    </div>
