@@ -1,22 +1,29 @@
 from django.shortcuts import render
 from django.views import generic
-from django.conf.urls import patterns, url, include
+from django.conf import settings
+from django.conf.urls import patterns, url, include, static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from twittexApp import views
 from django.conf import settings
 from django.views.generic.base import TemplateView
 
 
-urlpatterns = patterns('',
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^register/$', views.RegisterView.as_view(), name='register'),
+urlpatterns = patterns(
+    '',
+    url(r'^$', views.IndexView, name='index'),
+    url(r'^register/$', views.register, name='register'),
     url(r'^home/$', views.HomeView.as_view(), name='home'),
-    url(r'^newPost/$', views.newPost, name = 'new_post'),
+    url(r'^profile/(?P<username>[A-Za-z0-9\w|\W]+)$', views.ProfileDetailView, name='profile'),
+    url(r'^Messages/NewMsg/$', views.NewMsgView.as_view(), name='newMsg'),
+    url(r'^Messages/(?P<author>[\w-]+)/$', views.NachrichtenView.as_view(), name='messages'),
+    url(r'^SendNewMsg/$', views.sendMsg, name='sendMsg'),
+    url(r'^newPost/$', views.newPost, name='new_post'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',
         kwargs={'template_name': 'login.html'}
     ),
-	    url(
+    url(
         r'^logout/$',
         'django.contrib.auth.views.logout',
         kwargs={'next_page': '/','template_name': 'index.html'}
@@ -26,6 +33,12 @@ urlpatterns = patterns('',
     url(r'^thanks/$', TemplateView.as_view(template_name='thanks.html'), name='thanks'),
     url(r'^contact/$', TemplateView.as_view(template_name='contact.html'), name='contact'),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('django.views.static',
+        (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}),
+)
+
 
 """
 used urls in url('^', include('django.contrib.auth.urls'))

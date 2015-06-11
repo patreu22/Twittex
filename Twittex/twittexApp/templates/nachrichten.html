@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+  <link href="{% static "css/messages.css" %}" rel="stylesheet">
+  {% endblock %} 
+{% block content %}
+<table>
+  <tr>
+    <td class="well" width="70%">
+      <div class="container">
+        <h3>Conversations</h3>
+        <div class="row">
+          <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+              <li class="active"><a href="/Messages/NewMsg">New Message</a></li>
+      		{% for conv in conversations %}
+      				<li><a href="/Messages/{{conv.empfaenger}}">{{conv.empfaenger}} </a></li>
+              {% endfor %}
+            </ul>
+          </div>
+    </td>
+    <td>
+          <div> 
+            <h2>Your Conversation</h2>
+              <ul>
+                  {% for msg in object_list %}
+                    {% if msg.absender = request.user.username %}
+                      <div class="bubble">
+                      <p>({{msg.datum}})<br/> 
+                        {{msg.inhalt}}</p>
+                      </div>
+                    {% else %}
+                      <div class="bubble bubble--alt">
+                      <p>({{msg.datum}})<br/> 
+                        {{msg.inhalt}}</p>
+                      </div>
+                    {% endif %}
+        			    {% endfor %}
+      		    </ul>
+
+            <form action="/SendNewMsg/" method="post">
+      			{% csrf_token %}
+      			<input type="text" class="form-control" id="recipient" name="recipient">
+      			<textarea class="form-control" rows="5" id="inhalt" name="inhalt"></textarea>
+      		<button type="submit" class="btn btn-default">Send</button>
+      		</form>
+          </div>
+      </div>
+      </div>
+    </td>
+  </tr>
+</table>
+
+{% endblock content %}

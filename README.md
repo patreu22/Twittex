@@ -15,9 +15,16 @@ Get it work:
   
 Start it:  
 1) Run Postgresql with user: django pw: django and db: twittex_db
-2) Start App with
+
+2) Unter Twittex/Twittex/settings.py: MEDIA_ROOT = '(PFAD WO "manage.py" IST)/media' (Ganz unten)
+
+3) pip install Pillow
+
+4) Start App with
 
 	($python manage.py createsuperuser)
+	
+	$python manage.py migrate auth
 	
 	$python manage.py migrate
 	
