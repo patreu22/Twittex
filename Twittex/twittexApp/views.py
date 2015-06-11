@@ -93,7 +93,11 @@ class ProfileEditView(UpdateView):
 
 # called by submit post
 def newPost(request):
-    p = Posts(absender=str(request.user), inhalt=str(request.POST.get('inhalt')), hashtags='NULL', mentioned='NULL')
+    content = str(request.POST.get('inhalt'))
+    #hashtag search from http://stackoverflow.com/questions/6331497
+    hashtags = {tag.strip("#") for tag in content.split() if tag.startswith("#")}
+    mentioned = {tag.strip("@") for tag in content.split() if tag.startswith("@")}
+    p = Posts(absender=str(request.user), inhalt=content, hashtags=str(hashtags), mentioned=str(mentioned))
     p.save()
     return redirect('/home/')
 
