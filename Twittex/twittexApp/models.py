@@ -23,6 +23,11 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='profile_pictures', blank=True, default='no_photo.jpg')
     def __unicode__(self):
         return self.user.username
+    def getPicture(self):
+        if not self.picture:
+            return '/media/no_photo.jpg'
+        else:
+            return self.picture.url
     # followingList
     # myFollower
     # visibility(?)
