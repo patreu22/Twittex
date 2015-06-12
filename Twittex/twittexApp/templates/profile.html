@@ -22,11 +22,10 @@
 					{% for posts in object_list %}
 						{% if posts.absender = user.username  %}
 						<tr>
-							<td><p><a href="/profile/{{ user.username }}">@{{ user.username }}</a>
+							<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a>
                 			<div class="Post">{{ posts.inhalt }}</div>
-                			<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
-                		</td>
-                            
+                			<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a
+                			</td> 
 						</tr>
 						{% endif %}
            	 		{% endfor %}

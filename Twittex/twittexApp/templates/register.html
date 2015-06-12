@@ -7,8 +7,12 @@
 {% block content %}
         {% if registered %}
         <br/>
-        <strong>Thank you for Registering!</strong>
-        <a href="/">Return to the homepage.</a><br />
+        <div class="container">
+            <div class="jumbotron"><h1>Thank you for registering!</h1>
+                <h2><a href="/login">Go here for Login!</a><br /></h2></div>
+             
+        </div>
+       
         {% else %}
         <div class = "container">
             <div class="wrapper">

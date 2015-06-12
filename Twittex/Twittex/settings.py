@@ -118,5 +118,5 @@ EMAIL_HOST_PASSWORD = 'Twittex2015'
 EMAIL_USE_TLS = True
 
 # Media files
-MEDIA_ROOT = '/Users/Scott Phong/Desktop/Twittex/Twittex/media'
+MEDIA_ROOT = '/Users/Patrick/Desktop/Twittex/Twittex/media'
 MEDIA_URL = '/media/'
