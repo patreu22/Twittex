@@ -43,3 +43,9 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['desc', 'picture']
+
+class PostsName(object):
+    model = Posts
+    def get_context_data(self, **kwargs):
+        kwargs.update({'object_name':'Posts'})
+        return kwargs

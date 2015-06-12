@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, RequestContext, render_to_response, Http404
 from itertools import chain
 from django.db.models import Q
-from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView
-from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm
+from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
+from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm, PostsName
 from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, models
 from django.http import HttpResponse
 import smtplib
@@ -72,7 +72,7 @@ class HomeView(ListView):
 def ProfileDetailView(request, username):
     posts = Posts.objects.all()
     user = User.objects.get(username=username)
-    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request})
+    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request}, context_instance=RequestContext(request))
 
 
 class ProfileEditView(UpdateView):
@@ -93,7 +93,18 @@ class ProfileEditView(UpdateView):
 
 # called by submit post
 def newPost(request):
-    p = Posts(absender=str(request.user), inhalt=str(request.POST.get('inhalt')), hashtags='NULL', mentioned='NULL')
+    content = str(request.POST.get('inhalt'))
+    #hashtag search from http://stackoverflow.com/questions/6331497
+    hashtags = {tag.strip("#") for tag in content.split() if tag.startswith("#")}
+    mentioned = {tag.strip("@") for tag in content.split() if tag.startswith("@")}
+
+    print(mentioned)
+    for username in mentioned:
+        user = User.objects.get(username=username)
+        user.userprofile.mentioned_count += 1
+        user.userprofile.save()
+
+    p = Posts(absender=str(request.user), inhalt=content, hashtags=str(hashtags), mentioned=str(mentioned))
     p.save()
     return redirect('/home/')
 
@@ -154,3 +165,13 @@ def search(request):
         postss = Posts.objects.filter(inhalt__icontains = q)
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q})
+
+class NotificationView(ListView):
+    template_name = 'notification.html'
+    model = Posts
+    success_url = '/notifcation/'
+
+
+class DeleteView(PostsName, DeleteView):
+    template_name = 'delete_comfirm.html'
+    success_url = '/home/'

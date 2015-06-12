@@ -35,7 +35,7 @@
 		  <div class="container-fluid collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 		    <div class="navbar-header">
 		    	<form class="navbar-form navbar-left">
-		     		<a class="navbar-brand" href="#">Twittex</a>
+		     		<a class="navbar-brand" href="/index">Twittex</a>
 		     	</form>
 		    </div>
 
@@ -43,11 +43,11 @@
               {% if user.is_authenticated %}
 		      <ul class="nav navbar-nav">
 		      	<form class="navbar-form navbar-left">
-		        	<li class="active"><a href="/home/">Timeline</a></li>
+		      		<a href="/home/">Timeline</a>
 		    	</form>
                   <li>
 		        	<form class="navbar-form navbar-left">
-		        		<a href="/profile/{{ request.user.username }}">{{ request.user.username }}'s Profile</a>
+		        			<a href="/profile/{{ request.user.username }}">{{ request.user.username }}'s Profile</a>
 		        	</form>
 		        </li>
 		        <!--	<form class="navbar-form navbar-left">
@@ -56,17 +56,18 @@
   					</form>  -->
   				<li>
 		        	<form class="navbar-form navbar-left">
+                        {% csrf_token %}
 		        		<a data-toggle="modal" data-target="#myModal">Make a post</a>
 		        	</form>
 		        </li>
 		        <li>
 		        	<form class="navbar-form navbar-left">
-		        		<a href="/Messages/NewMsg">Messages <span class="badge">0</span></a>
+		        			<a href="/Messages/NewMsg">Messages <span class="badge">0</span></a>
 		        	</form>
 		        </li>
 		        <li>
 		        	<form class="navbar-form navbar-left">
-		        		<a href="#">Notifications <span class="badge">0</span></a>
+		        		<a href="/notification/">Notifications <span class="badge">{{ user.userprofile.mentioned_count }}</span></a>
 		        	</form>
 		        </li>
 		      </ul>
@@ -93,7 +94,7 @@
 		        			<span class="caret"></span>
 		        		</button>
 		        		<ul class="dropdown-menu">
-		        			<li><a href="#">Impressum</a></li>
+		        			<li><a href="/impressum">Impressum</a></li>
 		        			<li><a href="/contact">Contact</a></li>
 		        			<li><a href="#">Help</a></li>
 		        		</ul>
@@ -102,7 +103,11 @@
 		        </li>
 		        <li>
 		        	<form class="navbar-form navbar-left">
-		        		<a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a>
+		        		{% if user.is_authenticated %}
+		        		<a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+		        		{% else %}
+		        		<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+		        		{% endif %}
 		        	</form>
 		        </li>
     		</ul>

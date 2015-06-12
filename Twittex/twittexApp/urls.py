@@ -19,7 +19,9 @@ urlpatterns = patterns(
     url(r'^Messages/(?P<author>[\w-]+)/$', views.NachrichtenView.as_view(), name='messages'),
     url(r'^SendNewMsg/$', views.sendMsg, name='sendMsg'),
     url(r'^newPost/$', views.newPost, name='new_post'),
+    url(r'^delete/(?P<pk>[A-Za-z0-9\w|\W]+)$', views.DeleteView.as_view(), name='delete'),
 	url(r'^search/$', views.search, name='search'),
+    url(r'^notification/$', views.NotificationView.as_view(), name='notifcation'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',
@@ -34,6 +36,7 @@ urlpatterns = patterns(
     url(r'^contact/send/$', views.sendmail),
     url(r'^thanks/$', TemplateView.as_view(template_name='thanks.html'), name='thanks'),
     url(r'^contact/$', TemplateView.as_view(template_name='contact.html'), name='contact'),
+    url(r'^impressum/$', TemplateView.as_view(template_name='impressum.html'), name='impressum'),
 )
 
 if settings.DEBUG:
