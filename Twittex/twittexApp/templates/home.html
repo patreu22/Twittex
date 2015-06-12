@@ -7,7 +7,7 @@
 
 <div>
 <h1 class="well text-center">What's new on your Twittex feed?</h1>
-            {% for posts in object_list %}
+            {% for posts in postss %}
 				{% if posts.absender =  request.user.username  %}
 				<div class="well well-sm">
 					<table>
