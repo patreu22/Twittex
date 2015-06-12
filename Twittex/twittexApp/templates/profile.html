@@ -14,7 +14,12 @@
 		<table>
 			<tr>
 				<td class="well" width="30%"><img class="img-responsive img-rounded" src="{{ user.userprofile.getPicture }}" alt="Profile Picture"/>
-				Description:<br/>{{ user.userprofile.desc }}</td>
+				Description:<br/>{{ user.userprofile.desc }}<br/><br/>
+				{% if request.user = user %}
+            		<a href="edit" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Profile</a>
+        {% endif %}
+
+				</td>
 				<td>
 					<div class="well well-sm">
 					<h2>@{{ user.username }}'s posts:</h2>
@@ -34,8 +39,5 @@
                 </td>
 			</tr>
 		</table>
-        {% if request.user = user %}
-            <a href="edit" class="btn btn-primary btn-sm dropdown-toggle" role="button">Edit Profile</a>
-        {% endif %}
      </div>
 {% endblock content %}
