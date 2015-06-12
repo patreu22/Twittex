@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
+	<br/>
+	<div class="container">
 	<div class="well">
         {% if user.username = request.user.username %}
             <h1>Welcome to your profile!</h1>
@@ -20,9 +22,11 @@
 					{% for posts in object_list %}
 						{% if posts.absender = user.username  %}
 						<tr>
-							<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a>
-                			<div class="Post">{{ posts.inhalt }}</div><br/></td>
-                            <a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
+							<td><p><a href="/profile/{{ user.username }}">@{{ user.username }}</a>
+                			<div class="Post">{{ posts.inhalt }}</div>
+                			<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
+                		</td>
+                            
 						</tr>
 						{% endif %}
            	 		{% endfor %}
@@ -34,4 +38,5 @@
         {% if request.user = user %}
             <a href="edit" class="btn btn-primary btn-sm dropdown-toggle" role="button">Edit Profile</a>
         {% endif %}
+     </div>
 {% endblock content %}

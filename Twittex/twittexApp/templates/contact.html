@@ -1,7 +1,9 @@
 {% extends "base.html" %}
     {% block title %}Contact Us{% endblock title %}
     {% block content %}
+    <br/>
     <div class="container">
+      <h1 class="jumbotron">Contact</h1>
      <!-- <form  role="form"> -->
       <form role="form" class="form-horizontal" method="post" action="/contact/send/">
       	{% csrf_token %}
