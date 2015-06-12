@@ -63,14 +63,11 @@ def register(request):
         context)
 
 
-class HomeView(ListView):
-    template_name = 'home.html'
-    model = Posts
-    success_url = '/home/'
 
+	
 
 def ProfileDetailView(request, username):
-    posts = Posts.objects.all()
+    posts = Posts.objects.all().order_by('-datum')
     user = User.objects.get(username=username)
     return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request}, context_instance=RequestContext(request))
 
@@ -165,6 +162,11 @@ def search(request):
         postss = Posts.objects.filter(inhalt__icontains = q)
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q})
+			
+def viewHome(request): 
+	postss=Posts.objects.all().order_by("-datum")
+	return render(request,'home.html',
+	{'postss' : postss})
 
 class NotificationView(ListView):
     template_name = 'notification.html'
