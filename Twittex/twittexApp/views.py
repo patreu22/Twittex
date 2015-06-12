@@ -165,3 +165,9 @@ def search(request):
         postss = Posts.objects.filter(inhalt__icontains = q)
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q})
+
+
+class NotificationView(ListView):
+    template_name = 'notification.html'
+    model = Posts
+    success_url = '/notifcation/'

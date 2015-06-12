@@ -20,6 +20,7 @@ urlpatterns = patterns(
     url(r'^SendNewMsg/$', views.sendMsg, name='sendMsg'),
     url(r'^newPost/$', views.newPost, name='new_post'),
 	url(r'^search/$', views.search, name='search'),
+    url(r'^notification/$', views.NotificationView.as_view(), name='notifcation'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',

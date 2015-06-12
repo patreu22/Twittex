@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+	<link href="{% static "css/home.css" %}" rel="stylesheet">
+	{% endblock %}   
+{% block content %}
+
+<div>
+<h1 class="well text-center">Who mentioned you on Twittex?</h1>
+            {% for posts in object_list %}
+				{% if request.user.username in posts.mentioned %}
+				<div class="well well-sm">
+					<table>
+						<tr>
+							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ user.userprofile.getPicture }}" alt="Profile Picture"/></td>
+							<td><a href="/profile/{{ posts.absender }}">@{{ posts.absender }}</a><br/>
+                			{{ posts.inhalt }}
+                			</td>
+						</tr>
+					</table>
+				</div>
+				{% endif %}
+            {% endfor %}
+</div>
+{% endblock content %}
