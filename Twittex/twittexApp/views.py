@@ -63,9 +63,6 @@ def register(request):
         context)
 
 
-
-	
-
 def ProfileDetailView(request, username):
     posts = Posts.objects.all().order_by('-datum')
     user = User.objects.get(username=username)
@@ -101,7 +98,8 @@ def newPost(request):
         user.userprofile.mentioned_count += 1
         user.userprofile.save()
 
-    p = Posts(absender=str(request.user), inhalt=content, hashtags=str(hashtags), mentioned=str(mentioned))
+    p = Posts(inhalt=content, hashtags=str(hashtags), mentioned=str(mentioned))
+    p.autor = request.user
     p.save()
     return redirect('/home/')
 
@@ -162,11 +160,12 @@ def search(request):
         postss = Posts.objects.filter(inhalt__icontains = q)
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q})
-			
+
+
 def viewHome(request): 
-	postss=Posts.objects.all().order_by("-datum")
-	return render(request,'home.html',
-	{'postss' : postss})
+    postss=Posts.objects.all().order_by("-datum")
+    return render(request,'home.html',
+    {'postss': postss})
 
 class NotificationView(ListView):
     template_name = 'notification.html'

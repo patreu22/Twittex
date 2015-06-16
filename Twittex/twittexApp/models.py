@@ -5,11 +5,11 @@ from datetime import datetime
 
 
 class Posts(models.Model):
-    absender = models.CharField(max_length=50)
     inhalt = models.CharField(max_length=140)
     hashtags = models.CharField(max_length=100)
     mentioned = models.CharField(max_length=140)
     datum = models.DateTimeField(default=datetime.now, blank=True)
+    autor = models.ForeignKey(User)
 
 
 class Nachrichten(models.Model):
