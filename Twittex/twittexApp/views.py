@@ -94,6 +94,10 @@ def newPost(request):
     #hashtag search from http://stackoverflow.com/questions/6331497
     hashtags = {tag.strip("#") for tag in content.split() if tag.startswith("#")}
     mentioned = {tag.strip("@") for tag in content.split() if tag.startswith("@")}
+    #links erkennen
+    for tag in content.split():
+        if (tag.startswith("www.") | tag.startswith("http://") | tag.startswith("https://")):
+            content = content.replace(tag, "<a href='/"+tag+"'>"+tag+"</a>")
 
     print(mentioned)
     for username in mentioned:
