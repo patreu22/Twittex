@@ -8,12 +8,12 @@
 <div class="container">
 <h1 class="well text-center">What's new on your Twittex feed?</h1>
             {% for posts in postss %}
-				{% if posts.absender =  request.user.username  %}
+				{% if posts.autor =  request.user  %}
 				<div class="well well-sm">
 					<table>
 						<tr>
-							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ user.userprofile.getPicture }}" alt="Profile Picture"/></td>
-							<td><a href="/profile/{{ request.user.username }}">@{{request.user.username }}</a><br/>
+							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ posts.autor.userprofile.getPicture }}" alt="Profile Picture"/></td>
+							<td><a href="/profile/{{ posts.autor.username }}">@{{ posts.autor.username }}</a><br/>
                 			{{ posts.inhalt|safe }}
                 			</td>
 						</tr>
