@@ -6,6 +6,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from twittexApp import views
 from django.conf import settings
 from django.views.generic.base import TemplateView
+from django.contrib.auth.views import password_reset_confirm
 
 urlpatterns = patterns(
     '',
@@ -41,6 +42,29 @@ urlpatterns = patterns(
         'django.contrib.auth.views.password_change_done',
         kwargs={'template_name': 'password_change_done.html'},
         name= 'password_change_done'
+    ),
+    url(
+        r'^password_reset/$',
+        'django.contrib.auth.views.password_reset',
+        kwargs={'post_reset_redirect': 'twittexApp:password_reset_done', 'template_name': 'password_reset_form.html', 'email_template_name': 'password_reset_email.html'}
+    ),
+    url(
+        r'^password_reset_done/$',
+        'django.contrib.auth.views.password_reset_done',
+        kwargs={'template_name': 'password_mail_done.html'},
+        name= 'password_reset_done'
+    ),
+    url(
+        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        password_reset_confirm,
+        kwargs={'post_reset_redirect': 'twittexApp:password_reset_complete', 'template_name': 'password_reset_form.html'},
+        name='password_reset_confirm'
+    ),
+    url(
+        r'^reset/done/$',
+        'django.contrib.auth.views.password_reset_done',
+        kwargs={'template_name': 'password_reset_done.html'},
+        name='password_reset_complete'
     ),
     url(r'^contact/send/$', views.sendmail),
     url(r'^thanks/$', TemplateView.as_view(template_name='thanks.html'), name='thanks'),
