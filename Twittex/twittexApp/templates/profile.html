@@ -16,7 +16,8 @@
 				<td class="well" width="30%"><img class="img-responsive img-rounded" src="{{ user.userprofile.getPicture }}" alt="Profile Picture"/>
 				Description:<br/>{{ user.userprofile.desc }}<br/><br/>
 				{% if request.user = user %}
-            		<a href="edit" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Profile</a>
+            		<a href="/settings/edit" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Profile</a>
+					<a href="/settings/password_change" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Password</a>
         {% endif %}
 
 				</td>
