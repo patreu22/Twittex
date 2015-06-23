@@ -2,18 +2,20 @@
 
 {% block content %}
 <div class="container">
-  <h3>Conversations</h3>
   <div class="row">
+	<h3>Conversations</h3>
     <div class="col-md-2">
       <ul class="nav nav-pills nav-stacked">
         <li class="active"><a href="/Messages/NewMsg">New Message</a></li>
 		{% for conv in conversations %}
-				<li><a href="/Messages/{{conv.empfaenger}}">{{conv.empfaenger}} </a></li>
+			{% if conv.empfaenger != request.user.username %}
+      			<li><a href="/Messages/{{conv.empfaenger}}">{{conv.empfaenger}} </a></li>
+			{% endif %}
         {% endfor %}
       </ul>
     </div>
     <div class="col-md-10"> 
-      <h2>New Message</h2>
+      <h3>New Message</h3>
         <form action="/SendNewMsg/" method="post">
 			{% csrf_token %}
 			Recipient:  <input type="text" class="form-control" id="recipient" name="recipient">

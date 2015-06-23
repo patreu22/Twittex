@@ -126,7 +126,7 @@ class NewMsgView(ListView):
     def get_queryset(self):
         usr = str(self.request.user)
         q = Nachrichten.objects.filter(Q(absender=usr)
-                                       | Q(empfaenger=usr)).exclude(empfaenger=usr).values('empfaenger').distinct(
+                                       | Q(empfaenger=usr)).values('empfaenger').distinct(
             'empfaenger')
         return q
 
@@ -151,7 +151,7 @@ class NachrichtenView(ListView):
         context = super(NachrichtenView, self).get_context_data(*args, **kwargs)
         usr = str(self.request.user)
         context['conversations'] = Nachrichten.objects.filter(Q(absender=usr)
-                                                              | Q(empfaenger=usr)).exclude(empfaenger=usr).values(
+                                                              | Q(empfaenger=usr)).values(
             'empfaenger').distinct('empfaenger')
         return context 
     
