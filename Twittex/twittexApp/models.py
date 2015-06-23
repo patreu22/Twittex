@@ -7,9 +7,9 @@ from datetime import datetime
 class Posts(models.Model):
     inhalt = models.CharField(max_length=140)
     hashtags = models.CharField(max_length=100)
-    mentioned = models.CharField(max_length=140)
     datum = models.DateTimeField(default=datetime.now, blank=True)
     autor = models.ForeignKey(User)
+    mentioned = models.ManyToManyField(User, related_name='mentioned')
 
 
 class Nachrichten(models.Model):
@@ -31,8 +31,10 @@ class UserProfile(models.Model):
     desc = models.CharField(max_length = 140, blank=True, null=True)
     picture = models.ImageField(upload_to='profile_pictures', blank=True, default='no_photo.jpg')
     mentioned_count = models.IntegerField(default=0)
+
     def __unicode__(self):
         return self.user.username
+
     def getPicture(self):
         if not self.picture:
             return '/media/no_photo.jpg'

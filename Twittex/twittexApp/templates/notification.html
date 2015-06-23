@@ -7,8 +7,7 @@
 
 <div class="container">
 <h1 class="well text-center">Who mentioned you on Twittex?</h1>
-            {% for posts in object_list %}
-				{% if request.user.username in posts.mentioned %}
+            {% for posts in postss %}
 				<div class="well well-sm">
 					<table>
 						<tr>
@@ -18,7 +17,6 @@
 						</tr>
 					</table>
 				</div>
-				{% endif %}
             {% endfor %}
 </div>
 {% endblock content %}

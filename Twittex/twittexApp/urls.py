@@ -21,7 +21,7 @@ urlpatterns = patterns(
     url(r'^newPost/$', views.newPost, name='new_post'),
     url(r'^delete/(?P<pk>[A-Za-z0-9\w|\W]+)$', views.DeleteView.as_view(), name='delete'),
     url(r'^search/$', views.search, name='search'),
-    url(r'^notification/$', views.NotificationView.as_view(), name='notifcation'),
+    url(r'^notification/$', views.viewNotification, name='notifcation'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',
@@ -76,14 +76,3 @@ if settings.DEBUG:
     urlpatterns += patterns('django.views.static',
         (r'media/(?P<path>.*)', 'serve', {'document_root': settings.MEDIA_ROOT}),
 )
-
-
-"""
-used urls in url('^', include('django.contrib.auth.urls'))
-^password_change/$ [name='password_change']
-^password_change/done/$ [name='password_change_done']
-^password_reset/$ [name='password_reset']
-^password_reset/done/$ [name='password_reset_done']
-^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$ [name='password_reset_confirm']
-^reset/done/$ [name='password_reset_complete']
-"""

@@ -51,12 +51,12 @@ def register(request):
         else:
             print(user_form.errors, profile_form.errors)
 
-    # provie forms
+    # provide forms
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    # Render the template depending on the context.
+    # Render the template depending on the context
     return render_to_response(
         'register.html',
         {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
@@ -89,14 +89,18 @@ def newPost(request):
         if (tag.startswith("www.") | tag.startswith("http://") | tag.startswith("https://")):
             content = content.replace(tag, "<a href='/"+tag+"'>"+tag+"</a>")
 
-    print(mentioned)
+    p = Posts(inhalt=content, hashtags=str(hashtags))
+    p.autor = request.user
+    p.save()
+
     for username in mentioned:
         user = User.objects.get(username=username)
-        user.userprofile.mentioned_count += 1
-        user.userprofile.save()
+        if (user.username == username):
+            user.userprofile.mentioned_count += 1
+            user.userprofile.save()
+            p.mentioned.add(user)
+            p.save()
 
-    p = Posts(inhalt=content, hashtags=str(hashtags), mentioned=str(mentioned))
-    p.autor = request.user
     p.save()
     return redirect('/home/')
 
@@ -158,17 +162,17 @@ def search(request):
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q})
 
-
 def viewHome(request): 
     postss=Posts.objects.all().order_by("-datum")
     return render(request,'home.html',
     {'postss': postss})
 
-class NotificationView(ListView):
-    template_name = 'notification.html'
-    model = Posts
-    success_url = '/notifcation/'
-
+def viewNotification(request):
+    request.user.userprofile.mentioned_count = 0;
+    request.user.userprofile.save()
+    postss=Posts.objects.filter(mentioned=request.user)
+    return render(request,'notification.html',
+    {'postss': postss})
 
 class DeleteView(PostsName, DeleteView):
     template_name = 'delete_comfirm.html'
