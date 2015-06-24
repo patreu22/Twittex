@@ -82,12 +82,22 @@ class ProfileEditView(UpdateView):
 def newPost(request):
     content = str(request.POST.get('inhalt'))
     #hashtag search from http://stackoverflow.com/questions/6331497
-    hashtags = {tag.strip("#") for tag in content.split() if tag.startswith("#")}
-    mentioned = {tag.strip("@") for tag in content.split() if tag.startswith("@")}
+    hashtags = set() #={tag.strip("#") for tag in content.split() if tag.startswith("#")}
+    mentioned = set() #={tag.strip("@") for tag in content.split() if tag.startswith("@")}
     #links erkennen
     for tag in content.split():
-        if (tag.startswith("www.") | tag.startswith("http://") | tag.startswith("https://")):
-            content = content.replace(tag, "<a href='/"+tag+"'>"+tag+"</a>")
+        if tag.startswith("#"):
+            strippedTag = tag.strip("#")
+            hashtags.add(strippedTag)
+            content = content.replace(tag, "<a href='/search/?q="+strippedTag+"'>"+tag+"</a>")
+        if tag.startswith("@"):
+            strippedTag = tag.strip("@")
+            mentioned.add(strippedTag)
+            content = content.replace(tag, "<a href='/profile/"+strippedTag+"'>"+tag+"</a>")
+        if (tag.startswith("http://") | tag.startswith("https://")):
+            content = content.replace(tag, "<a href='"+tag+"'>"+tag+"</a>")
+        if tag.startswith("www."):
+            content = content.replace(tag, "<a href='http://"+tag+"'>"+tag+"</a>")
 
     p = Posts(inhalt=content, hashtags=str(hashtags))
     p.autor = request.user
