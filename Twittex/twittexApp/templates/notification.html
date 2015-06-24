@@ -12,7 +12,7 @@
 					<table>
 						<tr>
 							<td><a href="/profile/{{ posts.autor.username }}">@{{ posts.autor.username }}</a><br/>
-                			{{ posts.inhalt }}
+                			{{ posts.inhalt|safe }}
                 			</td>
 						</tr>
 					</table>

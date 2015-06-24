@@ -29,8 +29,10 @@
 						{% if posts.autor = user  %}
 						<tr>
 							<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a>
-                			<div class="Post">{{ posts.inhalt }}</div>
+                			<div class="Post">{{ posts.inhalt|safe }}</div>
+							{% if request.user = user %}
                 			<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
+							{% endif %}
                 			</td> 
 						</tr>
 						{% endif %}
