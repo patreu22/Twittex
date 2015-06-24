@@ -22,6 +22,8 @@ urlpatterns = patterns(
     url(r'^delete/(?P<pk>[A-Za-z0-9\w|\W]+)$', views.DeleteView.as_view(), name='delete'),
     url(r'^search/$', views.search, name='search'),
     url(r'^notification/$', views.viewNotification, name='notifcation'),
+    url(r'^followerlist/$', views.viewList, name='list'),
+    url(r'^newList/$', views.NewListView.as_view(), name='newList'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',

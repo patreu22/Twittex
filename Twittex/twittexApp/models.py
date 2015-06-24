@@ -44,9 +44,7 @@ class UserProfile(models.Model):
     # myFollower
     # visibility(?)
 
-
-class Group(models.Model):
-    groupID = models.CharField(max_length = 10)
-    title = models.CharField(max_length = 50)
-    admin = models.CharField(max_length = 50)
-    # members
+class List(models.Model):
+    title = models.CharField(max_length = 25)
+    admin = models.ForeignKey(User)
+    userlist = models.ManyToManyField(User, related_name='userlist')
