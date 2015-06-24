@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.forms import ModelForm
-from .models import Posts, User, UserProfile
+from .models import Posts, User, UserProfile, List
 
 
 class newPostForm(ModelForm):
@@ -46,6 +46,18 @@ class UserProfileForm(forms.ModelForm):
 
 class PostsName(object):
     model = Posts
+
     def get_context_data(self, **kwargs):
         kwargs.update({'object_name':'Posts'})
         return kwargs
+
+class ListForm(forms.ModelForm):
+    class Meta:
+        model = List
+        fields = ['title', 'admin']
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if List.objects.exclude(pk=self.instance.pk).filter(title=title).exists():
+            raise forms.ValidationError(u'Title "%s" is already in use.' % title)
+        return title

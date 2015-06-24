@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect, RequestContext, render_to_respons
 from itertools import chain
 from django.db.models import Q
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
-from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm, PostsName
-from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, models
+from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm, PostsName, ListForm
+from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, models, List
 from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
@@ -76,6 +76,20 @@ class ProfileEditView(UpdateView):
 
     def get_object(self):
         return UserProfile.objects.get(user=self.request.user)
+
+
+def viewList(request):
+    list=List.objects.all()
+    return render(request,'list.html',
+    {'object_list': list})
+
+
+
+class NewListView(CreateView):
+    template_name = 'newList.html'
+    model = List
+    success_url = '/followerlist/'
+    form_class = ListForm
 
 
 # called by submit post

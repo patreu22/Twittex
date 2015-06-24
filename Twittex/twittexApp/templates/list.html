@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+	<link href="{% static "css/home.css" %}" rel="stylesheet">
+	{% endblock %}   
+{% block content %}
+
+<div class="container">
+<h1 class="well text-center">Your Followerlists</h1>
+            {% for list in object_list %}
+				{% if list.admin =  request.user  %}
+				<div class="well well-sm">
+					<table>
+						<tr>
+							<td>
+                			Title: {{ list.title }}
+                			</td>
+						</tr>
+					</table>
+				</div>
+				{% endif %}
+            {% endfor %}
+			<a href="/newList/" class="btn btn-primary btn-sm">Create new Followerlist!</a>
+</div>
+{% endblock content %}
