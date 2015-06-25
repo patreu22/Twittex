@@ -21,7 +21,7 @@
 					{% elif follow = no %}
 					<a href={% url 'twittexApp:Follow' user.username %} class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Follow</a>
 					{%elif follow = yes%}
-					<a href='#' class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Unfollow</a>
+					<a href={% url 'twittexApp:Unfollow' user.username %}  class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Unfollow</a>
         {% endif %}
 
 				</td>

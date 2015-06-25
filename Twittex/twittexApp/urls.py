@@ -27,6 +27,7 @@ urlpatterns = patterns(
     url(r'^followerlist/(?P<pk>[\w-]+)/$', views.ListDetailView, name='detailList'),
     url(r'^followerlist/(?P<pk>[\w-]+)/edit/$', views.ListEditView.as_view(), name='editList'),
     url(r'^follow/(?P<username>[\w-]+)/$', views.following, name='Follow'),
+	url(r'^unfollow/(?P<username>[\w-]+)/$', views.unfollowing, name='Unfollow'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',

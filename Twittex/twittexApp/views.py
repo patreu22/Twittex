@@ -218,7 +218,7 @@ def viewHome(request):
         if e.autor == request.user.username or e.autor in followers :
             timeline.append(e)
     return render(request,'home.html',
-    {'postss': postss})
+    {'postss': timeline})
 
 def viewNotification(request):
     request.user.userprofile.mentioned_count = 0;
@@ -234,4 +234,9 @@ class DeleteView(PostsName, DeleteView):
 def following(request, username):
     userp= User.objects.get(username= username)
     request.user.userprofile.follows.add(userp.userprofile)
+    return redirect('/profile/' +userp.username )
+	
+def unfollowing(request, username):
+    userp= User.objects.get(username= username)
+    request.user.userprofile.follows.remove(userp.userprofile)
     return redirect('/profile/' +userp.username )
