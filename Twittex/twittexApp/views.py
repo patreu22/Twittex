@@ -212,13 +212,18 @@ def search(request):
 
 def viewHome(request): 
     postss=Posts.objects.all().order_by("-datum")
+    name= request.user
     followers= request.user.userprofile.follows.all()
-    timeline= {}
-    for e in postss:
-        if e.autor == request.user.username or e.autor in followers :
-            timeline.append(e)
+    noFollow= UserProfile.objects.all()
+    for e in followers:
+        us= e.user
+        noFollow= noFollow.exclude(user=us)
+    noFollow= noFollow.exclude(user=name)
+    for a in noFollow:
+        nam= a.user
+        postss= postss.exclude(autor=nam)
     return render(request,'home.html',
-    {'postss': timeline})
+    {'postss': postss})
 
 def viewNotification(request):
     request.user.userprofile.mentioned_count = 0;
