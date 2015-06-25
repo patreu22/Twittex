@@ -34,8 +34,25 @@
     </ul>
 {% endif %}
 
+{% if lists %}
+    <p>Found {{ lists|length }} List{{ lists|pluralize }}:</p>
+    <ul>
+        {% for li in lists %}
+				<div class="well well-sm">
+					<table>
+						<tr>
+							<td>
+                			<a href="{{ li.title }}">{{ li.title }}</a>
+                			</td>
+						</tr>
+					</table>
+				</div>
+        {% endfor %}
+    </ul>
+{% endif %}
 
-	{% if postss|length = 0 and users|length = 0 %}
+
+	{% if postss|length = 0 and users|length = 0 and lists|length = 0 %}
 		<p> No matching results found for <strong>'{{query}}'</strong> </p>
 	{% endif %}
 {% endif %}
