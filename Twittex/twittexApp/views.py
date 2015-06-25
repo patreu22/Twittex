@@ -7,7 +7,7 @@ from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, 
 from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 
 # Create your views here.
 def IndexView(request):
@@ -63,7 +63,6 @@ def register(request):
         {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
         context)
 
-
 def ProfileDetailView(request, username):
     posts = Posts.objects.all().order_by('-datum')
     user = User.objects.get(username=username)
@@ -80,7 +79,6 @@ def ProfileDetailView(request, username):
         follow = 'yes'
     return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request, 'followlist': follower, 'follow':follow, 'yes': yes, 'no': no}, context_instance=RequestContext(request))
 
-
 class ProfileEditView(UpdateView):
     template_name = 'editprofile.html'
     success_url = '/'
@@ -88,7 +86,6 @@ class ProfileEditView(UpdateView):
 
     def get_object(self):
         return UserProfile.objects.get(user=self.request.user)
-
 
 def viewList(request):
     list=List.objects.all()
@@ -112,8 +109,19 @@ class ListEditView(UpdateView):
     model = List
 
     def get_success_url(self):
-        return reverse('twittexApp:detailList', kwargs={'pk': self.kwargs['pk']})
+        return reverse('twittexApp:detailList')
 
+class ListDeleteView(DeleteView):
+    template_name = 'delete_comfirm.html'
+    success_url = '/home/'
+    model = List
+
+def ListFollowView(request, pk):
+    list = List.objects.get(id = pk)
+    userlist = list.userlist.all()
+    for user in userlist:
+        request.user.userprofile.follows.add(user.userprofile)
+    return redirect('/home/')
 
 # called by submit post
 def newPost(request):
@@ -201,7 +209,8 @@ class NachrichtenView(ListView):
                                                               | Q(empfaenger=usr)).values(
             'empfaenger').distinct('empfaenger')
         return context 
-    
+
+
 def search(request):
         q = request.GET['q']
         users = User.objects.filter(username__icontains = q)
@@ -209,6 +218,7 @@ def search(request):
         lists = List.objects.filter(title__icontains = q)
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q, 'lists': lists})
+
 
 def viewHome(request): 
     postss=Posts.objects.all().order_by("-datum")
@@ -225,6 +235,7 @@ def viewHome(request):
     return render(request,'home.html',
     {'postss': postss})
 
+
 def viewNotification(request):
     request.user.userprofile.mentioned_count = 0;
     request.user.userprofile.save()
@@ -232,15 +243,13 @@ def viewNotification(request):
     return render(request,'notification.html',
     {'postss': postss})
 
-class DeleteView(PostsName, DeleteView):
-    template_name = 'delete_comfirm.html'
-    success_url = '/home/'
 
 def following(request, username):
     userp= User.objects.get(username= username)
     request.user.userprofile.follows.add(userp.userprofile)
     return redirect('/profile/' +userp.username )
-	
+
+
 def unfollowing(request, username):
     userp= User.objects.get(username= username)
     request.user.userprofile.follows.remove(userp.userprofile)
