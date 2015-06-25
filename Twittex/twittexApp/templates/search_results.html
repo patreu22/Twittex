@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div class="container">
 <h1>Search results for '{{query}}': </h1>
 {% if query %}
 
@@ -25,7 +25,7 @@
 						<tr>
 							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/></td>
 							<td><a href="/profile/{{ posts.autor.username }}">@{{posts.autor.username }}</a><br/>
-                			{{ posts.inhalt }}
+                			{{ posts.inhalt | safe }}
                 			</td>
 						</tr>
 					</table>
@@ -39,4 +39,5 @@
 		<p> No matching results found for <strong>'{{query}}'</strong> </p>
 	{% endif %}
 {% endif %}
+</div>
 {% endblock content %}

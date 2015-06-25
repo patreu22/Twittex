@@ -5,6 +5,7 @@
  */
 
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
 html {
   font-family: sans-serif;
   -webkit-text-size-adjust: 100%;
@@ -4077,7 +4078,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     border-radius: 4px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 1238px) {
   .navbar-header {
     float: left;
   }
@@ -4096,10 +4097,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 @media (min-width: 768px) {
   .navbar-collapse {
-    width: auto;
-    border-top: 0;
-    -webkit-box-shadow: none;
-            box-shadow: none;
+    max-height: auto !important;
+    overflow-x: auto !important;
   }
   .navbar-collapse.collapse {
     display: block !important;
@@ -6582,5 +6581,4 @@ button.close {
   }
 }
 
-
-/*# sourceMappingURL=bootstrap.css.map */
+body { padding-top: 55px; }

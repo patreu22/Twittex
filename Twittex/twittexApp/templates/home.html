@@ -13,7 +13,7 @@
 					<table>
 						<tr>
 							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ posts.autor.userprofile.getPicture }}" alt="Profile Picture"/></td>
-							<td><a href="/profile/{{ posts.autor.username }}">@{{ posts.autor.username }}</a><br/>
+							<td><a href="/profile/{{ posts.autor.username }}">@{{ posts.autor.username }}</a> wrote at {{ posts.datum }}<br/>
                 			{{ posts.inhalt|safe }}
                 			</td>
 						</tr>

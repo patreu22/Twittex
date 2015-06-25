@@ -9,6 +9,7 @@
 		{% endblock %}
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link href="{% static "css/base.css" %}" rel="stylesheet">
+		<link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
 
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -18,31 +19,28 @@
 			});
 		</script>
 	</head>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 			<div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                <li><a class="navbar-brand" href="/">Twittex</a></li>
             </div>
 
-		  <div class="container-fluid collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		    <div class="navbar-header">
-		    	<form class="navbar-form navbar-left">
-		     		<a class="navbar-brand" href="/">Twittex</a>
-		     	</form>
-		    </div>
-
-		    <div>
+		  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               {% if user.is_authenticated %}
 		      <ul class="nav navbar-nav">
-		      	<form class="navbar-form navbar-left">
-		      		<a href="/home/">Timeline</a>
-		    	</form>
+		      	<li>
+		      		<form class="navbar-form navbar-left">
+		      			<a href="/home/">Timeline</a>
+		    		</form>
+		    	</li>
                   <li>
 		        	<form class="navbar-form navbar-left">
 		        			<a href="/profile/{{ request.user.username }}">{{ request.user.username }}'s Profile</a>
@@ -81,10 +79,8 @@
 		    		<form class="navbar-form navbar-left" role="search" action ="/search/" method= "get">
   						<div class="form-group form-group-sm">
   							<input type="text" class="form-control" name = "q">
+  							<button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-search"></span> Search</button>
   						</div>
-
-
-  						<button type="submit" class="btn btn-primary btn-sm">Search</button>
   					</form>
 					<!-- <span class="glyphicons glyphicons-search"></span> -->
 				</li>
@@ -104,21 +100,29 @@
 		        	</div>
 		        </form>
 		        </li>
-		        <li>
+		        
+        		{% if user.is_authenticated %}
+        		<li>
 		        	<form class="navbar-form navbar-left">
-		        		{% if user.is_authenticated %}
-		        		<a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-		        		{% else %}
-						<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-						<a href="/register">Register</a>
-		        		{% endif %}
+        				<a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+        			</form>
+        		</li>
+        		{% else %}
+        		<li>
+		        	<form class="navbar-form navbar-left">
+		        		<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
 		        	</form>
 		        </li>
+		        <li>
+		        	<form class="navbar-form navbar-left">
+		        		<a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a>
+		        	</form>
+		        </li>
+        		{% endif %}
     		</ul>
-      		</div>
 		    </div>
-		</nav>
 		</div>
+		</nav>
 
 		{% block content %}
 		{% endblock content %}

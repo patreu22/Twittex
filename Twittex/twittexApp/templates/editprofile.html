@@ -5,6 +5,7 @@
      {% endblock %}
 
 {% block content %}
+<div class="container">
 <h1 class="well">Edit Profil</h1>
 <form method="post" class="form" enctype="multipart/form-data">
     {% csrf_token %}
@@ -15,6 +16,8 @@
         {{ field }}
         </div>
     {% endfor %}
-    <input type="submit" value="Edit my Profile" />
+    <input type="submit" class="btn btn-info" value="Edit my Profile" />
+    <a href="/profile/{{ request.user.username }}" class="btn btn-info" role="button">Back to the Profile</a>
 </form>
+</div>
 {% endblock content %}
