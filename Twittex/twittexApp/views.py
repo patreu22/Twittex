@@ -95,8 +95,8 @@ def viewList(request):
     return render(request,'list.html',
     {'object_list': list})
 
-def ListDetailView(request, title):
-    list = List.objects.get(title=title)
+def ListDetailView(request, pk):
+    list = List.objects.get(id=pk)
     userlist = list.userlist.all()
     return render_to_response('listdetail.html', {'list': list, 'userlist': userlist,'request': request}, context_instance=RequestContext(request))
 
@@ -108,14 +108,11 @@ class NewListView(CreateView):
 
 class ListEditView(UpdateView):
     template_name = 'editlist.html'
-    success_url = '/'
-    fields = ['userlist']
-
-    def get_object(self):
-        return List.objects.get(title=self.kwargs['title'])
+    fields = ['title', 'userlist']
+    model = List
 
     def get_success_url(self):
-        return reverse('twittexApp:detailList', kwargs={'title': self.kwargs['title']})
+        return reverse('twittexApp:detailList', kwargs={'pk': self.kwargs['pk']})
 
 
 # called by submit post

@@ -24,8 +24,8 @@ urlpatterns = patterns(
     url(r'^notification/$', views.viewNotification, name='notifcation'),
     url(r'^followerlist/$', views.viewList, name='list'),
     url(r'^newList/$', views.NewListView.as_view(), name='newList'),
-    url(r'^followerlist/(?P<title>[\w-]+)/$', views.ListDetailView, name='detailList'),
-    url(r'^followerlist/(?P<title>[\w-]+)/edit/$', views.ListEditView.as_view(), name='editList'),
+    url(r'^followerlist/(?P<pk>[\w-]+)/$', views.ListDetailView, name='detailList'),
+    url(r'^followerlist/(?P<pk>[\w-]+)/edit/$', views.ListEditView.as_view(), name='editList'),
     url(r'^follow/(?P<username>[\w-]+)/$', views.following, name='Follow'),
     url(
         r'^login/$',

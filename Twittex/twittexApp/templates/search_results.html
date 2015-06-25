@@ -25,7 +25,7 @@
 						<tr>
 							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ user.userprofile.picture.url }}" alt="Profile Picture"/></td>
 							<td><a href="/profile/{{ posts.autor.username }}">@{{posts.autor.username }}</a><br/>
-                			{{ posts.inhalt }}
+                			{{ posts.inhalt|safe }}
                 			</td>
 						</tr>
 					</table>
