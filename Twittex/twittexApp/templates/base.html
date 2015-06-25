@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
+<div lang="en">
 	<head>
 		<title>Twittex</title>
 		<meta charset="utf-8">
@@ -18,10 +18,8 @@
 			});
 		</script>
 	</head>
-	
-	<body>
 		<nav class="navbar navbar-inverse navbar-fixed-top">
-			< class="container-fluid">
+			<div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -120,6 +118,7 @@
       		</div>
 		    </div>
 		</nav>
+		</div>
 
 		{% block content %}
 		{% endblock content %}
