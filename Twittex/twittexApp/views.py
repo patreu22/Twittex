@@ -214,6 +214,11 @@ def search(request):
 
 def viewHome(request): 
     postss=Posts.objects.all().order_by("-datum")
+    followers= request.user.userprofile.follows.all()
+    timeline= {}
+    for e in postss:
+        if e.autor == request.user.username or e.autor in followers :
+            timeline.append(e)
     return render(request,'home.html',
     {'postss': postss})
 
