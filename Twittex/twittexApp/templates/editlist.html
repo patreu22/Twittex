@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+     {% block extra_head %}
+        <link href="{% static "css/login.css" %}" rel="stylesheet">
+     {% endblock %}
+
+{% block content %}
+<h1 class="well">Edit Followerlist</h1>
+<form method="post" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+    Choose User by pressing CTR/STRG+Click on User!
+    {% for field in form %}
+        <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {{ field }}
+        </div>
+    {% endfor %}
+    <input type="submit" value="Edit my Followerlist" />
+</form>
+{% endblock content %}
