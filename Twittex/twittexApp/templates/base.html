@@ -40,9 +40,11 @@
 		    <div>
               {% if user.is_authenticated %}
 		      <ul class="nav navbar-nav">
+				  <li>
 		      	<form class="navbar-form navbar-left">
 		      		<a href="/home/">Timeline</a>
 		    	</form>
+				</li>
                   <li>
 		        	<form class="navbar-form navbar-left">
 		        			<a href="/profile/{{ request.user.username }}">{{ request.user.username }}'s Profile</a>
