@@ -7,6 +7,7 @@ from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, 
 from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 
 # Create your views here.
 def IndexView(request):
@@ -93,6 +94,17 @@ class NewListView(CreateView):
     model = List
     success_url = '/followerlist/'
     form_class = ListForm
+
+class ListEditView(UpdateView):
+    template_name = 'editlist.html'
+    success_url = '/'
+    fields = ['userlist']
+
+    def get_object(self):
+        return List.objects.get(title=self.kwargs['title'])
+
+    def get_success_url(self):
+        return reverse('twittexApp:detailList', kwargs={'title': self.kwargs['title']})
 
 
 # called by submit post
