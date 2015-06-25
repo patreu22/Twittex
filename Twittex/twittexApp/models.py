@@ -31,7 +31,7 @@ class UserProfile(models.Model):
     desc = models.CharField(max_length = 140, blank=True, null=True)
     picture = models.ImageField(upload_to='profile_pictures', blank=True, default='no_photo.jpg')
     mentioned_count = models.IntegerField(default=0)
-
+    follows= models.ManyToManyField('UserProfile', related_name='followed_by')
     def __unicode__(self):
         return self.user.username
 

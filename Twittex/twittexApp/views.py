@@ -67,7 +67,18 @@ def register(request):
 def ProfileDetailView(request, username):
     posts = Posts.objects.all().order_by('-datum')
     user = User.objects.get(username=username)
-    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request}, context_instance=RequestContext(request))
+    follower= request.user.userprofile.follows.all()
+    if len(follower) != 0 and user.userprofile in follower:
+        follow= follower.get(user= user)
+    else:
+        follow = None
+    yes= 'yes'
+    no= 'no'
+    if follow is None :
+        follow= 'no'
+    else:
+        follow = 'yes'
+    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request, 'followlist': follower, 'follow':follow, 'yes': yes, 'no': no}, context_instance=RequestContext(request))
 
 
 class ProfileEditView(UpdateView):
@@ -216,3 +227,8 @@ def viewNotification(request):
 class DeleteView(PostsName, DeleteView):
     template_name = 'delete_comfirm.html'
     success_url = '/home/'
+
+def following(request, username):
+    userp= User.objects.get(username= username)
+    request.user.userprofile.follows.add(userp.userprofile)
+    return redirect('/profile/' +userp.username )
