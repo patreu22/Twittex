@@ -7,7 +7,7 @@ from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, 
 from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 
 # Create your views here.
 def IndexView(request):
@@ -67,7 +67,18 @@ def register(request):
 def ProfileDetailView(request, username):
     posts = Posts.objects.all().order_by('-datum')
     user = User.objects.get(username=username)
-    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request}, context_instance=RequestContext(request))
+    follower= request.user.userprofile.follows.all()
+    if len(follower) != 0 and user.userprofile in follower:
+        follow= follower.get(user= user)
+    else:
+        follow = None
+        yes= 'yes'
+        no= 'no'
+        if follow is None :
+            follow= 'no'
+        else:
+            follow = 'yes'
+    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request, 'followlist': follower, 'follow':follow, 'yes': yes, 'no': no}, context_instance=RequestContext(request))
 
 
 class ProfileEditView(UpdateView):
@@ -84,8 +95,8 @@ def viewList(request):
     return render(request,'list.html',
     {'object_list': list})
 
-def ListDetailView(request, title):
-    list = List.objects.get(title=title)
+def ListDetailView(request, pk):
+    list = List.objects.get(id=pk)
     userlist = list.userlist.all()
     return render_to_response('listdetail.html', {'list': list, 'userlist': userlist,'request': request}, context_instance=RequestContext(request))
 
@@ -97,15 +108,23 @@ class NewListView(CreateView):
 
 class ListEditView(UpdateView):
     template_name = 'editlist.html'
-    success_url = '/'
-    fields = ['userlist']
-
-    def get_object(self):
-        return List.objects.get(title=self.kwargs['title'])
+    fields = ['title', 'userlist']
+    model = List
 
     def get_success_url(self):
-        return reverse('twittexApp:detailList', kwargs={'title': self.kwargs['title']})
+        return reverse('twittexApp:detailList')
 
+class ListDeleteView(DeleteView):
+    template_name = 'delete_comfirm.html'
+    success_url = '/home/'
+    model = List
+
+def ListFollowView(request, pk):
+    list = List.objects.get(id = pk)
+    userlist = list.userlist.all()
+    for user in userlist:
+        request.user.userprofile.follows.add(user.userprofile)
+    return redirect('/home/')
 
 # called by submit post
 def newPost(request):
@@ -198,11 +217,22 @@ def search(request):
         q = request.GET['q']
         users = User.objects.filter(username__icontains = q)
         postss = Posts.objects.filter(inhalt__icontains = q)
+        lists = List.objects.filter(title__icontains = q)
         return render(request, 'search_results.html',
-            {'users': users, 'postss' : postss,  'query': q})
+            {'users': users, 'postss' : postss,  'query': q, 'lists': lists})
 
 def viewHome(request): 
     postss=Posts.objects.all().order_by("-datum")
+    name= request.user
+    followers= request.user.userprofile.follows.all()
+    noFollow= UserProfile.objects.all()
+    for e in followers:
+        us= e.user
+        noFollow= noFollow.exclude(user=us)
+    noFollow= noFollow.exclude(user=name)
+    for a in noFollow:
+        nam= a.user
+        postss= postss.exclude(autor=nam)
     return render(request,'home.html',
     {'postss': postss})
 
@@ -213,6 +243,13 @@ def viewNotification(request):
     return render(request,'notification.html',
     {'postss': postss})
 
-class DeleteView(PostsName, DeleteView):
-    template_name = 'delete_comfirm.html'
-    success_url = '/home/'
+def following(request, username):
+    userp= User.objects.get(username= username)
+    request.user.userprofile.follows.add(userp.userprofile)
+    return redirect('/profile/' +userp.username )
+
+
+def unfollowing(request, username):
+    userp= User.objects.get(username= username)
+    request.user.userprofile.follows.remove(userp.userprofile)
+    return redirect('/profile/' +userp.username )

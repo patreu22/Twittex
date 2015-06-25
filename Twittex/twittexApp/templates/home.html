@@ -8,7 +8,6 @@
 <div class="container">
 <h1 class="well text-center">What's new on your Twittex feed?</h1>
             {% for posts in postss %}
-				{% if posts.autor =  request.user  %}
 				<div class="well well-sm">
 					<table>
 						<tr>
@@ -19,7 +18,6 @@
 						</tr>
 					</table>
 				</div>
-				{% endif %}
             {% endfor %}
 </div>
 {% endblock content %}
