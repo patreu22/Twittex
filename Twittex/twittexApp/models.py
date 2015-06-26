@@ -47,4 +47,4 @@ class UserProfile(models.Model):
 class List(models.Model):
     title = models.CharField(max_length = 25)
     admin = models.ForeignKey(User)
-    userlist = models.ManyToManyField(User, related_name='userlist')
+    userlist = models.ManyToManyField(User, related_name='userlist', blank=True)

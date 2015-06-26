@@ -117,7 +117,7 @@ class ListEditView(UpdateView):
     model = List
 
     def get_success_url(self):
-        return reverse('twittexApp:detailList')
+        return reverse('twittexApp:list')
 
 
 class ListDeleteView(DeleteView):
@@ -169,6 +169,11 @@ def newPost(request):
 
     p.save()
     return redirect('/home/')
+
+
+class DeleteView(PostsName, DeleteView):
+    template_name = 'delete_comfirm.html'
+    success_url = '/home/'
 
 
 def sendmail(request):
