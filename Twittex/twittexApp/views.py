@@ -9,6 +9,7 @@ import smtplib
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 
+
 # Create your views here.
 def IndexView(request):
     if request.user.is_authenticated():
@@ -72,12 +73,13 @@ def ProfileDetailView(request, username):
         follow= follower.get(user= user)
     else:
         follow = None
-        yes= 'yes'
-        no= 'no'
-        if follow is None :
-            follow= 'no'
-        else:
-            follow = 'yes'
+
+    yes= 'yes'
+    no= 'no'
+    if follow is None :
+        follow= 'no'
+    else:
+        follow = 'yes'
     return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request, 'followlist': follower, 'follow':follow, 'yes': yes, 'no': no}, context_instance=RequestContext(request))
 
 
@@ -95,16 +97,19 @@ def viewList(request):
     return render(request,'list.html',
     {'object_list': list})
 
+
 def ListDetailView(request, pk):
     list = List.objects.get(id=pk)
     userlist = list.userlist.all()
     return render_to_response('listdetail.html', {'list': list, 'userlist': userlist,'request': request}, context_instance=RequestContext(request))
+
 
 class NewListView(CreateView):
     template_name = 'newList.html'
     model = List
     success_url = '/followerlist/'
     form_class = ListForm
+
 
 class ListEditView(UpdateView):
     template_name = 'editlist.html'
@@ -114,10 +119,12 @@ class ListEditView(UpdateView):
     def get_success_url(self):
         return reverse('twittexApp:detailList')
 
+
 class ListDeleteView(DeleteView):
     template_name = 'delete_comfirm.html'
     success_url = '/home/'
     model = List
+
 
 def ListFollowView(request, pk):
     list = List.objects.get(id = pk)
@@ -125,6 +132,7 @@ def ListFollowView(request, pk):
     for user in userlist:
         request.user.userprofile.follows.add(user.userprofile)
     return redirect('/home/')
+
 
 # called by submit post
 def newPost(request):
@@ -162,6 +170,7 @@ def newPost(request):
     p.save()
     return redirect('/home/')
 
+
 def sendmail(request):
     if request.method == 'POST':
         form = EmailForm(request.POST)
@@ -175,6 +184,7 @@ def sendmail(request):
             return redirect('/thanks/')
         else:
             return redirect('/contact/')
+
 
 #Nachrichten
 class NewMsgView(ListView):
@@ -212,7 +222,8 @@ class NachrichtenView(ListView):
                                                               | Q(empfaenger=usr)).values(
             'empfaenger').distinct('empfaenger')
         return context 
-    
+
+
 def search(request):
         q = request.GET['q']
         users = User.objects.filter(username__icontains = q)
@@ -220,6 +231,7 @@ def search(request):
         lists = List.objects.filter(title__icontains = q)
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q, 'lists': lists})
+
 
 def viewHome(request): 
     postss=Posts.objects.all().order_by("-datum")
@@ -236,12 +248,14 @@ def viewHome(request):
     return render(request,'home.html',
     {'postss': postss})
 
+
 def viewNotification(request):
     request.user.userprofile.mentioned_count = 0;
     request.user.userprofile.save()
     postss=Posts.objects.filter(mentioned=request.user)
     return render(request,'notification.html',
     {'postss': postss})
+
 
 def following(request, username):
     userp= User.objects.get(username= username)

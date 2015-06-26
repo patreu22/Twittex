@@ -18,6 +18,10 @@
 				{% if request.user = user %}
             		<a href="/settings/edit" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Profile</a>
 					<a href="/settings/password_change" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Password</a>
+					{% elif follow = no %}
+					<a href={% url 'twittexApp:Follow' user.username %} class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Follow</a>
+					{%elif follow = yes%}
+					<a href={% url 'twittexApp:Unfollow' user.username %}  class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Unfollow</a>
         {% endif %}
 
 				</td>

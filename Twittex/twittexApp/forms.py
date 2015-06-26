@@ -60,4 +60,6 @@ class ListForm(forms.ModelForm):
         title = self.cleaned_data['title']
         if List.objects.exclude(pk=self.instance.pk).filter(title=title).exists():
             raise forms.ValidationError(u'Title "%s" is already in use.' % title)
+        if title.isspace():
+            raise forms.ValidationError('')
         return title
