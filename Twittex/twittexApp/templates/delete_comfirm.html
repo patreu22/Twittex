@@ -5,7 +5,8 @@
 	<div class="jumbotron"><h1>Are you sure?</h1></div>
 <form method="post" class="form">
     {% csrf_token %}
-    <input class="btn btn-block btn-primary" type="submit" value="Confirm" />
+    	<button type="submit" class="btn btn-primary btn-block">Submit</button>
+    	<a href="/profile/{{ request.user.username }}" class="btn btn-default btn-block" role="button">Back to the Profile</a>
 </form>
 </div>
 {% endblock %}

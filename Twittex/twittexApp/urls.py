@@ -29,7 +29,7 @@ urlpatterns = patterns(
     url(r'^followerlist/(?P<pk>[\w-]+)/delete/$', views.ListDeleteView.as_view(), name='deleteList'),
     url(r'^followerlist/(?P<pk>[\w-]+)/follow/$', views.ListFollowView, name='followList'),
     url(r'^follow/(?P<username>[\w-]+)/$', views.following, name='Follow'),
-	url(r'^unfollow/(?P<username>[\w-]+)/$', views.unfollowing, name='Unfollow'),
+    url(r'^unfollow/(?P<username>[\w-]+)/$', views.unfollowing, name='Unfollow'),
     url(
         r'^login/$',
         'django.contrib.auth.views.login',

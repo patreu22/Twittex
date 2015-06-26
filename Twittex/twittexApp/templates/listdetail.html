@@ -11,13 +11,13 @@
             <div>Userlist:</div>
             <ol>
             {% for user in userlist %}
-                        <li>{{ user.username }}</li>
+            <li>{{ user.username }}</li>
             {% endfor %}
             </ol>
             <a href="follow/" class="btn btn-primary btn-sm">Follow Followerlist</a>
             {% if list.admin == request.user %}
-                <a href="edit/" class="btn btn-primary btn-sm">Edit Followerlist/Add Users</a>
-                <a href="delete/" class="btn btn-primary btn-sm">Delete Followerlist</a>
+            <a href="edit/" class="btn btn-primary btn-sm">Edit Followerlist/Add Users</a>
+            <a href="delete/" class="btn btn-primary btn-sm">Delete Followerlist</a>
             {% endif %}
 </div>
 {% endblock content %}
