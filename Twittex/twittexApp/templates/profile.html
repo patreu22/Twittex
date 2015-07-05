@@ -23,25 +23,36 @@
 					{%elif follow = yes%}
 					<a href={% url 'twittexApp:Unfollow' user.username %}  class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Unfollow</a>
         {% endif %}
-
 				</td>
 				<td>
 					<div class="well well-sm">
 					<h2>@{{ user.username }}'s posts:</h2>
-					{% for posts in object_list %}
-						{% if posts.autor = user  %}
-						<table>
-						<tr>
-							<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a> wrote at {{ posts.datum }}
-                			<div class="Post">{{ posts.inhalt|safe }}</div>
-							{% if request.user = user %}
-                			<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
+					{% if privacy = yes %}
+						{% for posts in object_list %}
+							{% if posts.autor = user  %}
+							<table>
+							<tr>
+								<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a> wrote at {{ posts.datum }}
+								<div class="Post">{{ posts.inhalt|safe }}</div>
+								{% if request.user = user %}
+								<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
+								{% endif %}
+								</td>
+							</tr>
+						</table>
 							{% endif %}
-                			</td> 
-						</tr>
-            		</table>
-						{% endif %}
-           	 		{% endfor %}
+						{% endfor %}
+					{% else %}
+						<table>
+							<tr>
+								<td>
+									<div>
+										Sorry, but only {{ user }} and who he is following can see those posts :/
+									</div>
+								</td>
+							</tr>
+						</table>
+					{% endif %}
 				</div>
                 </td>
 			</tr>

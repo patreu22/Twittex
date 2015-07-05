@@ -74,19 +74,28 @@ def ProfileDetailView(request, username):
     else:
         follow = None
 
+    privacy = 'yes'
+
+    if username != request.user.username:
+        if user.userprofile.privacy:
+            if request.user.userprofile in user.userprofile.follows.all():
+                privacy = 'yes'
+            else:
+                privacy = 'no'
+
     yes= 'yes'
     no= 'no'
     if follow is None :
         follow= 'no'
     else:
         follow = 'yes'
-    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request, 'followlist': follower, 'follow':follow, 'yes': yes, 'no': no}, context_instance=RequestContext(request))
+    return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request, 'followlist': follower, 'follow':follow, 'privacy':privacy, 'yes': yes, 'no': no}, context_instance=RequestContext(request))
 
 
 class ProfileEditView(UpdateView):
     template_name = 'editprofile.html'
     success_url = '/'
-    fields = ['desc', 'picture']
+    fields = ['desc', 'picture', 'privacy']
 
     def get_object(self):
         return UserProfile.objects.get(user=self.request.user)
@@ -233,6 +242,14 @@ def search(request):
         q = request.GET['q']
         users = User.objects.filter(username__icontains = q)
         postss = Posts.objects.filter(inhalt__icontains = q)
+        userlist = postss.values('autor')
+
+        for user in userlist:
+            if user.privacy:
+                userlist = user.follows.all()
+                if request.user.userprofile not in userlist:
+                    postss = postss.exclude(autor=user.user)
+
         lists = List.objects.filter(title__icontains = q)
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q, 'lists': lists})
@@ -250,6 +267,13 @@ def viewHome(request):
     for a in noFollow:
         nam= a.user
         postss= postss.exclude(autor=nam)
+
+    for follower in followers:
+        if follower.privacy:
+            userlist = follower.follows.all()
+            if request.user.userprofile not in userlist:
+                postss = postss.exclude(autor=follower.user)
+
     return render(request,'home.html',
     {'postss': postss})
 

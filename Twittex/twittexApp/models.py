@@ -31,7 +31,11 @@ class UserProfile(models.Model):
     desc = models.CharField(max_length = 140, blank=True, null=True)
     picture = models.ImageField(upload_to='profile_pictures', blank=True, default='no_photo.jpg')
     mentioned_count = models.IntegerField(default=0)
-    follows= models.ManyToManyField('UserProfile', related_name='followed_by')
+    follows = models.ManyToManyField('UserProfile', related_name='followed_by')
+    privacy = models.BooleanField(default=False)
+    # false für alle sichtbar
+    # true nur für die ich folge sichbar
+
     def __unicode__(self):
         return self.user.username
 
@@ -40,9 +44,7 @@ class UserProfile(models.Model):
             return '/media/no_photo.jpg'
         else:
             return self.picture.url
-    # followingList
-    # myFollower
-    # visibility(?)
+
 
 class List(models.Model):
     title = models.CharField(max_length = 25)

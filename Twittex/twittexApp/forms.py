@@ -42,7 +42,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['desc', 'picture']
+        fields = ['desc', 'picture', 'privacy']
 
 class PostsName(object):
     model = Posts
