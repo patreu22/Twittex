@@ -8,16 +8,32 @@
 <div class="container">
 <h1 class="well">Edit Profil</h1>
 <form method="post" class="form" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for field in form %}
+    <input type='hidden' name='csrfmiddlewaretoken' value='mhOyljCX7hvdd5qPnKE3poXPTHI9OE4M' />
+
         <div class="form-group">
-        {{ field.errors }}
-        {{ field.label_tag }}
-        {{ field }}
+        {% csrf_token %}
+        <label for="id_desc">Desc:</label>
+        <input id="id_desc" maxlength="140" name="desc" type="text" />
         </div>
-    {% endfor %}
+
+        <div class="form-group">
+
+        <label for="id_picture">Picture:</label>
+        Currently: <a href="/media/no_photo.jpg">no_photo.jpg</a> <input id="picture-clear_id" name="picture-clear" type="checkbox" /> <label for="picture-clear_id">Clear</label><br />Change: <input id="id_picture" name="picture" type="file" />
+        </div>
+
+        <div class="form-group">
+
+        <label for="id_privacy">Privacy(Check, If you only want to share with people who you follow):</label>
+        {% if request.user.userprofile.privacy %}
+            <input id="id_privacy" name="privacy" type="checkbox" checked/>
+        {% else %}
+            <input id="id_privacy" name="privacy" type="checkbox"/>
+        {% endif %}
+        </div>
+
     <input type="submit" class="btn btn-info" value="Edit my Profile" />
-    <a href="/profile/{{ request.user.username }}" class="btn btn-info" role="button">Back to the Profile</a>
+    <a href="/profile/duybach" class="btn btn-info" role="button">Back to the Profile</a>
 </form>
 </div>
 {% endblock content %}
