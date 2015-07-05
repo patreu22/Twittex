@@ -242,13 +242,18 @@ def search(request):
         q = request.GET['q']
         users = User.objects.filter(username__icontains = q)
         postss = Posts.objects.filter(inhalt__icontains = q)
-        userlist = postss.values('autor')
+        userlist = postss.values_list('autor', flat=True)
 
         for user in userlist:
-            if user.privacy:
-                userlist = user.follows.all()
+            print(user)
+
+        for user in userlist:
+            tmpuser = User.objects.get(id=user)
+
+            if tmpuser.userprofile.privacy:
+                # userlist = user.follows.all()
                 if request.user.userprofile not in userlist:
-                    postss = postss.exclude(autor=user.user)
+                    postss = postss.exclude(autor=tmpuser)
 
         lists = List.objects.filter(title__icontains = q)
         return render(request, 'search_results.html',
