@@ -78,6 +78,8 @@ urlpatterns = patterns(
     url(r'^thanks/$', TemplateView.as_view(template_name='thanks.html'), name='thanks'),
     url(r'^contact/$', TemplateView.as_view(template_name='contact.html'), name='contact'),
     url(r'^impressum/$', TemplateView.as_view(template_name='impressum.html'), name='impressum'),
+    url(r'^api/post/$', views.apiPost, name='api_post'),
+    url(r'^api/test/$', TemplateView.as_view(template_name = 'apiPost_test.html'), name='apiTest'),
 )
 
 if settings.DEBUG:

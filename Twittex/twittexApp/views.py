@@ -8,6 +8,7 @@ from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib.auth import authenticate
 
 
 # Create your views here.
@@ -147,8 +148,8 @@ def ListFollowView(request, pk):
 def newPost(request):
     content = str(request.POST.get('inhalt'))
     #hashtag search from http://stackoverflow.com/questions/6331497
-    hashtags = set() #={tag.strip("#") for tag in content.split() if tag.startswith("#")}
-    mentioned = set() #={tag.strip("@") for tag in content.split() if tag.startswith("@")}
+    hashtags = set()
+    mentioned = set()
     #links erkennen
     for tag in content.split():
         if tag.startswith("#"):
@@ -301,3 +302,21 @@ def unfollowing(request, username):
     userp= User.objects.get(username= username)
     request.user.userprofile.follows.remove(userp.userprofile)
     return redirect('/profile/' +userp.username )
+
+#API
+def apiPost(request):
+    if request.method == "POST":
+        usr = str(request.POST.get('username'))
+        pswd = str(request.POST.get('password'))
+        content = str(request.POST.get('inhalt'))
+        user = authenticate(username=usr, password=pswd)
+        if user is not None:
+            return newPost(request)
+        else:
+            return HttpResponse('invalid user / pwd'+usr+pswd+content)
+    else:
+        return HttpResponse('Post method required')
+
+class testApiView(CreateView):
+    template_name = 'apiPost_test.html'
+    
