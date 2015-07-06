@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block content %}
+<div class="container">
+						<form action="/api/post/" method="post">
+								{% csrf_token %}
+								username: 
+								<input type="text" class="form-control" id="username" name="username">
+								password:
+								<textarea class="form-control" rows="1" id="password" name="password"></textarea>
+								<textarea class="form-control" rows="5" id="inhalt" name="inhalt"></textarea></br>
+								<button type="submit" class="btn btn-primary btn-block">Post!</button>
+							<br/>
+							</form>
+						</div>
+						{% endblock content %}
