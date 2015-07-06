@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="well">Create new Followerlist</h1>
-<form method="post" class="form" enctype="multipart/form-data">
-    {% csrf_token %}
-        <div class="form-group">
-        <label for="id_title">Title:</label>
-        <input id="id_title" maxlength="25" name="title" type="text"/>
-        <input class="hidden" id="id_admin" name="admin" value={{ request.user.id }} />
-        </div>
-    <input type="submit" value="Create new Followerlist" />
-</form>
+<div class="container">
+	<h1 class="well">Create new Followerlist</h1>
+	<form method="post" class="form" enctype="multipart/form-data">
+	    {% csrf_token %}
+	        <div class="form-group">
+	        <label for="id_title">Title:</label>
+	        <input id="id_title" maxlength="25" name="title" type="text"/>
+	        <input class="hidden" id="id_admin" name="admin" value={{ request.user.id }} />
+	        </div>
+	    <input type="submit" value="Create new Followerlist" />
+	</form>
+</div>
 {% endblock content %}

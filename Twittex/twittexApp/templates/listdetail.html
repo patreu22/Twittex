@@ -14,10 +14,10 @@
             <li>{{ user.username }}</li>
             {% endfor %}
             </ol>
-            <a href="follow/" class="btn btn-primary btn-sm">Follow Followerlist</a>
+            <a href="follow/" class="btn btn-primary btn-sm">Follow {{ list.title }}</a>
             {% if list.admin == request.user %}
-            <a href="edit/" class="btn btn-primary btn-sm">Edit Followerlist/Add Users</a>
-            <a href="delete/" class="btn btn-primary btn-sm">Delete Followerlist</a>
+            <a href="edit/" class="btn btn-primary btn-sm">Edit {{ list.title }}/Add Users</a>
+            <a href="delete/" class="btn btn-primary btn-sm">Delete {{ list.title }}</a>
             {% endif %}
 </div>
 {% endblock content %}
