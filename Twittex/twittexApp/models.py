@@ -34,7 +34,7 @@ class UserProfile(models.Model):
     follows = models.ManyToManyField('UserProfile', related_name='followed_by')
     privacy = models.BooleanField(default=False)
     # false fuer alle sichtbar
-    # true nur für die ich folge sichbar
+    # true nur fuer die ich folge sichbar
 
     def __unicode__(self):
         return self.user.username
