@@ -9,14 +9,21 @@
 <h1 class="well text-center">What's new on your Twittex feed?</h1>
             {% for posts in postss %}
 				<div class="well well-sm">
-					<table>
-						<tr>
-							<td><img style="width:40px; height: 40px" class="img-responsive img-rounded" src="{{ posts.autor.userprofile.getPicture }}" alt="Profile Picture"/></td>
-							<td><a href="/profile/{{ posts.autor.username }}">@{{ posts.autor.username }}</a> wrote at {{ posts.datum }}<br/>
-                			{{ posts.inhalt|safe }}
-                			</td>
-						</tr>
-					</table>
+					<div class="row">
+						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+							<img style="width: 45px; height: auto" class="img-responsive img-rounded center-block" src="{{ posts.autor.userprofile.getPicture }}" alt="Profile Picture"/>
+						</div>
+						<div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+							<a href="/profile/{{ posts.autor.username }}">@{{ posts.autor.username }}</a> wrote at {{ posts.datum }}
+							<br/>
+							{{ posts.inhalt|safe }}
+						</div>
+						<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+							{% if posts.autor.username = user.username %}
+							<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
+							{% endif %}
+						</div>
+					</div>
 				</div>
             {% endfor %}
 </div>
