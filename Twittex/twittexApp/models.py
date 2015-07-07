@@ -5,11 +5,17 @@ from datetime import datetime
 
 
 class Posts(models.Model):
+    Post_Privacy_CHOICES = (
+    ('Pub', 'Public'),
+    ('OF', 'only Followers'),
+    ('OM', 'only Me'),
+)
     inhalt = models.CharField(max_length=140)
     hashtags = models.CharField(max_length=100)
     datum = models.DateTimeField(default=datetime.now, blank=True)
     autor = models.ForeignKey(User)
     mentioned = models.ManyToManyField(User, related_name='mentioned')
+    privacy= models.CharField(max_length = 3,choices=Post_Privacy_CHOICES,default='Pub')
 
 
 class Nachrichten(models.Model):
