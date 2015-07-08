@@ -1,9 +1,11 @@
+from pathlib import _Accessor
+from django.db.models.query_utils import Q
 from django.shortcuts import render, redirect, RequestContext, render_to_response, Http404
 from itertools import chain
 from django.db.models import Q
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm, PostsName, ListForm
-from twittexApp.models import Posts, User, UserProfile, Nachrichten, EmailForm, models, List
+from twittexApp.models import Posts, User, UserProfile, EmailForm, models, List, Conversation
 from django.http import HttpResponse
 import smtplib
 from django.core.mail import send_mail
@@ -200,7 +202,7 @@ def sendmail(request):
         else:
             return redirect('/contact/')
 
-
+"""
 #Nachrichten
 class NewMsgView(ListView):
     template_name = 'newMsg.html'
@@ -237,7 +239,48 @@ class NachrichtenView(ListView):
                                                               | Q(empfaenger=usr)).values(
             'empfaenger').distinct('empfaenger')
         return context 
+"""
+def NachrichtenView(request):
+    context_object_name = 'conversations'
 
+    user = request.user
+    eingang = Conversation.objects.filter(Q(empfaenger=user))
+    ausgang = Conversation.objects.filter(Q(absender=user))
+
+    return render_to_response('nachrichten.html', {'eingang': eingang, 'ausgang': ausgang,'request': request}, context_instance=RequestContext(request))
+
+
+def sendMsg(request):
+    if request.method == 'POST':
+        inhalt = request.POST['inhalt']
+        empfaenger = request.POST['empfaenger']
+        absender = request.POST['absender']
+
+        if not (User.objects.filter(username=empfaenger).exists()):
+            # user not found
+            return redirect('/home/')
+
+        absender = User.objects.get(username=absender)
+        empfaenger = User.objects.get(username=empfaenger)
+
+        msg = Conversation(absender=absender, empfaenger=empfaenger, inhalt=inhalt)
+        msg.save()
+
+        return redirect('/messages/')
+    else:
+        return render(request,
+            'newMsg.html')
+
+
+def ConversationView(request, username):
+    mainuser = request.user
+
+    if not (User.objects.filter(username=username).exists()):
+        return redirect('/messages/')
+
+    user = User.objects.get(username=username)
+    lists = Conversation.objects.filter((Q(absender=mainuser) & Q(empfaenger=user)) | (Q(absender=user) & Q(empfaenger=mainuser))).order_by('-datum')
+    return render_to_response('conversation.html', {'conversations': lists, 'request': request, 'partner': user}, context_instance=RequestContext(request))
 
 def search(request):
         q = request.GET['q']

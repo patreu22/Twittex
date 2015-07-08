@@ -12,17 +12,16 @@ class Posts(models.Model):
     mentioned = models.ManyToManyField(User, related_name='mentioned')
 
 
-class Nachrichten(models.Model):
-    absender = models.CharField(max_length = 50)
-    empfaenger = models.CharField(max_length = 50)
-    inhalt = models.CharField(max_length = 140)
+class Conversation(models.Model):
+    absender = models.ForeignKey(User, related_name='absender')
+    empfaenger = models.ForeignKey(User)
+    inhalt = models.CharField(max_length=140)
     datum = models.DateTimeField(default=datetime.now, blank=True)
-    
 
 class EmailForm(forms.Form):
-    name = forms.CharField(max_length = 255)
+    name = forms.CharField(max_length=255)
     email = forms.EmailField()
-    subject = forms.CharField(max_length = 255)
+    subject = forms.CharField(max_length=255)
     message = forms.CharField()
 
 

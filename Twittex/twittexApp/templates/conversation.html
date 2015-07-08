@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="well">Your Conversation with <a href="/profile/{{partner.username}}">{{partner.username}}</a></h1>
+d
+<table class="table">
+         <thead>
+                 <tr>
+                         <th>From</th>
+                         <th>Content</th>
+                         <th>Latest Date</th>
+                  </tr>
+        </thead>
+        <tbody>
+            {% for conv in conversations %}
+                 <tr>
+                         <td><a href="/profile/{{conv.absender.username }}">{{ conv.absender.username }}</a></td>
+                         <td> {{ conv.inhalt }} </td>
+                         <td> {{ conv.datum }}</td>
+                 </tr>
+            {% endfor %}
+        </tbody>
+</table>
+
+
+<a href="/sendMsg" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Send a Message</a>
+{% endblock %}
