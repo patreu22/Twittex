@@ -3,7 +3,7 @@
 {% block content %}
 
 <h1 class="well">Your Conversation with <a href="/profile/{{partner.username}}">{{partner.username}}</a></h1>
-d
+
 <table class="table">
          <thead>
                  <tr>
@@ -24,5 +24,14 @@ d
 </table>
 
 
-<a href="/sendMsg" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Send a Message</a>
+<form action="/sendMsg/" method="post" class="form" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <input type="hidden" id="absender" name="absender" value={{ request.user.username }} />
+        <input type="text" class="form-control" id="empfaenger" name="empfaenger" placeholder="Reciepment" required="" autofocus="" />
+        <input type="text" class="form-control" id="inhalt" name="inhalt" placeholder="Inhalt" required=""/>
+    </div>
+    <input type="submit" value="Send Messages" />
+    </form>
 {% endblock %}
