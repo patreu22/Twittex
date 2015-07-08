@@ -7,6 +7,7 @@ from twittexApp import views
 from django.conf import settings
 from django.views.generic.base import TemplateView
 from django.contrib.auth.views import password_reset_confirm
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns(
     '',
@@ -14,22 +15,19 @@ urlpatterns = patterns(
     url(r'^register/$', views.register, name='register'),
     url(r'^home/$', views.viewHome, name='home'),
     url(r'^profile/(?P<username>[\w-]+)/$', views.ProfileDetailView, name='profile'),
-    url(r'^settings/edit$', views.ProfileEditView.as_view(), name='profileedit'),
-    #url(r'^Messages/NewMsg/$', views.NewMsgView.as_view(), name='newMsg'),
-    #url(r'^Messages/(?P<author>[\w-]+)/$', views.NachrichtenView.as_view(), name='messages'),
-    #url(r'^SendNewMsg/$', views.sendMsg, name='sendMsg'),
+    url(r'^settings/edit$', (login_required(login_url='/login/'))(views.ProfileEditView.as_view()), name='profileedit'),
     url(r'^messages/$', views.NachrichtenView, name='messages'),
     url(r'^messages/(?P<username>[\w-]+)/$', views.ConversationView, name='conversation'),
     url(r'^sendMsg/$', views.sendMsg, name='sendMsg'),
     url(r'^newPost/$', views.newPost, name='new_post'),
-    url(r'^delete/(?P<pk>[A-Za-z0-9\w|\W]+)$', views.DeleteView.as_view(), name='delete'),
+    url(r'^delete/(?P<pk>[A-Za-z0-9\w|\W]+)$', (login_required(login_url='/login/'))(views.DeleteView.as_view()), name='delete'),
     url(r'^search/$', views.search, name='search'),
     url(r'^notification/$', views.viewNotification, name='notifcation'),
     url(r'^followerlist/$', views.viewList, name='list'),
-    url(r'^newList/$', views.NewListView.as_view(), name='newList'),
+    url(r'^newList/$', (login_required(login_url='/login/'))(views.NewListView.as_view()), name='newList'),
     url(r'^followerlist/(?P<pk>[\w-]+)/$', views.ListDetailView, name='detailList'),
-    url(r'^followerlist/(?P<pk>[\w-]+)/edit/$', views.ListEditView.as_view(), name='editList'),
-    url(r'^followerlist/(?P<pk>[\w-]+)/delete/$', views.ListDeleteView.as_view(), name='deleteList'),
+    url(r'^followerlist/(?P<pk>[\w-]+)/edit/$', (login_required(login_url='/login/'))(views.ListEditView.as_view()), name='editList'),
+    url(r'^followerlist/(?P<pk>[\w-]+)/delete/$', (login_required(login_url='/login/'))(views.ListDeleteView.as_view()), name='deleteList'),
     url(r'^followerlist/(?P<pk>[\w-]+)/follow/$', views.ListFollowView, name='followList'),
     url(r'^follow/(?P<username>[\w-]+)/$', views.following, name='Follow'),
     url(r'^unfollow/(?P<username>[\w-]+)/$', views.unfollowing, name='Unfollow'),

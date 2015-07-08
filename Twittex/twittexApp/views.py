@@ -6,14 +6,16 @@ from django.db.models import Q
 from django.views.generic import TemplateView, CreateView, ListView, DetailView, UpdateView, DeleteView
 from twittexApp.forms import UserCreationForm, AuthenticationForm, UserForm, UserProfileForm, PostsName, ListForm
 from twittexApp.models import Posts, User, UserProfile, EmailForm, models, List, Conversation
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import smtplib
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required(login_url='/login/')
 def viewPrivacy(request,pk):
     cname= request.POST.get('priv')
     userp= request.user
@@ -75,7 +77,7 @@ def register(request):
         {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},
         context)
 
-
+@login_required(login_url='/login/')
 def ProfileDetailView(request, username):
     posts = Posts.objects.all().order_by('-datum')
     user = User.objects.get(username=username)
@@ -118,13 +120,13 @@ class ProfileEditView(UpdateView):
     def get_object(self):
         return UserProfile.objects.get(user=self.request.user)
 
-
+@login_required(login_url='/login/')
 def viewList(request):
     list=List.objects.all()
     return render(request,'list.html',
     {'object_list': list})
 
-
+@login_required(login_url='/login/')
 def ListDetailView(request, pk):
     list = List.objects.get(id=pk)
     userlist = list.userlist.all()
@@ -152,7 +154,16 @@ class ListDeleteView(DeleteView):
     success_url = '/home/'
     model = List
 
+    def delete(self, request, *args, **kwargs):
+       self.object = self.get_object()
+       if self.object.admin == request.user:
+          self.object.delete()
+          success_url = self.get_success_url()
+          return HttpResponseRedirect(success_url)
+       else:
+          raise Http404 #or return HttpResponse('404_url')
 
+@login_required(login_url='/login/')
 def ListFollowView(request, pk):
     list = List.objects.get(id = pk)
     userlist = list.userlist.all()
@@ -162,6 +173,7 @@ def ListFollowView(request, pk):
 
 
 # called by submit post
+@login_required(login_url='/login/')
 def newPost(request):
     content = str(request.POST.get('inhalt'))
     #hashtag search from http://stackoverflow.com/questions/6331497
@@ -202,6 +214,15 @@ class DeleteView(PostsName, DeleteView):
     template_name = 'delete_comfirm.html'
     success_url = '/home/'
 
+    def delete(self, request, *args, **kwargs):
+       self.object = self.get_object()
+       if self.object.autor == request.user:
+          self.object.delete()
+          success_url = self.get_success_url()
+          return HttpResponseRedirect(success_url)
+       else:
+          raise Http404 #or return HttpResponse('404_url')
+
 
 def sendmail(request):
     if request.method == 'POST':
@@ -217,44 +238,7 @@ def sendmail(request):
         else:
             return redirect('/contact/')
 
-"""
-#Nachrichten
-class NewMsgView(ListView):
-    template_name = 'newMsg.html'
-    context_object_name = 'conversations'
-
-    def get_queryset(self):
-        usr = str(self.request.user)
-        q = Nachrichten.objects.filter(Q(absender=usr)
-                                       | Q(empfaenger=usr)).values('empfaenger').distinct(
-            'empfaenger')
-        return q
-
-
-def sendMsg(request):
-    e = str(request.POST.get('recipient'))
-    n = Nachrichten(absender=str(request.user), inhalt=str(request.POST.get('inhalt')), empfaenger=e)
-    n.save()
-    return redirect('/Messages/' + e)
-
-
-class NachrichtenView(ListView):
-    template_name = 'nachrichten.html'
-
-    def get_queryset(self):
-        usr = str(self.request.user)
-        q = Nachrichten.objects.filter((Q(empfaenger=usr) & Q(absender=str(self.kwargs['author'])))
-                                       | (Q(absender=usr) & Q(empfaenger=str(self.kwargs['author']))))
-        return q
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(NachrichtenView, self).get_context_data(*args, **kwargs)
-        usr = str(self.request.user)
-        context['conversations'] = Nachrichten.objects.filter(Q(absender=usr)
-                                                              | Q(empfaenger=usr)).values(
-            'empfaenger').distinct('empfaenger')
-        return context 
-"""
+@login_required(login_url='/login/')
 def NachrichtenView(request):
     context_object_name = 'conversations'
 
@@ -264,7 +248,7 @@ def NachrichtenView(request):
 
     return render_to_response('nachrichten.html', {'eingang': eingang, 'ausgang': ausgang,'request': request}, context_instance=RequestContext(request))
 
-
+@login_required(login_url='/login/')
 def sendMsg(request):
     if request.method == 'POST':
         inhalt = request.POST['inhalt']
@@ -286,7 +270,7 @@ def sendMsg(request):
         return render(request,
             'newMsg.html')
 
-
+@login_required(login_url='/login/')
 def ConversationView(request, username):
     mainuser = request.user
 
@@ -297,6 +281,7 @@ def ConversationView(request, username):
     lists = Conversation.objects.filter((Q(absender=mainuser) & Q(empfaenger=user)) | (Q(absender=user) & Q(empfaenger=mainuser))).order_by('-datum')
     return render_to_response('conversation.html', {'conversations': lists, 'request': request, 'partner': user}, context_instance=RequestContext(request))
 
+@login_required(login_url='/login/')
 def search(request):
         q = request.GET['q']
         users = User.objects.filter(username__icontains = q)
@@ -318,7 +303,7 @@ def search(request):
         return render(request, 'search_results.html',
             {'users': users, 'postss' : postss,  'query': q, 'lists': lists})
 
-
+@login_required(login_url='/login/')
 def viewHome(request): 
     postss=Posts.objects.all().order_by("-datum")
     name= request.user
@@ -348,7 +333,7 @@ def viewHome(request):
     return render(request,'home.html',
     {'postss': postss})
 
-
+@login_required(login_url='/login/')
 def viewNotification(request):
     request.user.userprofile.mentioned_count = 0;
     request.user.userprofile.save()
@@ -356,13 +341,13 @@ def viewNotification(request):
     return render(request,'notification.html',
     {'postss': postss})
 
-
+@login_required(login_url='/login/')
 def following(request, username):
     userp= User.objects.get(username= username)
     request.user.userprofile.follows.add(userp.userprofile)
     return redirect('/profile/' +userp.username )
 
-
+@login_required(login_url='/login/')
 def unfollowing(request, username):
     userp= User.objects.get(username= username)
     request.user.userprofile.follows.remove(userp.userprofile)
