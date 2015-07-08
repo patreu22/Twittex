@@ -12,6 +12,14 @@ from django.contrib.auth import authenticate
 
 
 # Create your views here.
+def viewPrivacy(request,pk):
+    cname= request.POST.get('priv')
+    userp= request.user
+    post = Posts.objects.get(id=pk)
+    post.privacy= cname
+    post.save()
+    return redirect('/profile/' +userp.username )
+	
 def IndexView(request):
     if request.user.is_authenticated():
         return redirect('/home')
@@ -90,6 +98,13 @@ def ProfileDetailView(request, username):
         follow= 'no'
     else:
         follow = 'yes'
+	
+    for p in posts:
+        followed = p.autor.userprofile.followed_by.all()
+        if p.privacy == 'OM' and p.autor != request.user:
+            posts = posts.exclude(id= p.id)
+        if p.privacy == 'OF' and request.user.userprofile not in followed and request.user != p.autor:
+                posts = posts.exclude(id= p.id)
     return render_to_response('profile.html', {'object_list': posts, 'user': user, 'request': request, 'followlist': follower, 'follow':follow, 'privacy':privacy, 'yes': yes, 'no': no}, context_instance=RequestContext(request))
 
 
@@ -279,6 +294,13 @@ def viewHome(request):
             userlist = follower.follows.all()
             if request.user.userprofile not in userlist:
                 postss = postss.exclude(autor=follower.user)
+    for p in postss:
+        followed = p.autor.userprofile.followed_by.all()
+        if p.privacy == 'OM' and p.autor != request.user:
+            postss = postss.exclude(id= p.id)
+        if request.user != p.autor:
+            if p.privacy == 'OF' and request.user in followed:
+              postss = postss.exclude(id= p.id)
 
     return render(request,'home.html',
     {'postss': postss})

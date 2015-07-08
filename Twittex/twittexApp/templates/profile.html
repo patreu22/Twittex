@@ -41,23 +41,49 @@
 							<h2>@{{ user.username }}'s posts:</h2>
 							{% if privacy = yes %}
 							{% for posts in object_list %}
-							{% if posts.autor = user  %}
-						</td>
+							{% if posts.autor = user  %}</td>
 					</tr>
 					</thead>
 					<tr class="info">
-						<td>
-							<a href="/profile/{{ user.username }}">@{{ user.username }}</a> wrote at {{ posts.datum }}
-							<div class="Post">
-								{{ posts.inhalt|safe }}
-							</div>
-						</td>
-						<td>
-							{% if request.user = user %}
-							<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
-							{% endif %}
-						</td>
-					</tr>
+								<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a> wrote at {{ posts.datum }}
+								<div class="Post">{{ posts.inhalt|safe }}</div>
+								{% if request.user = user %}
+								<form action={% url 'twittexApp:viewPrivacy' posts.id %} method="post"> {% csrf_token %}
+								<p> 
+									{% if posts.privacy = 'Pub' %}
+								<select name="priv"> 
+								        <option value="Pub">Public</option> 
+								        <option value="OF">Only Followers</option> 
+								        <option value="OM">Only Me</option> 
+								</select> 
+								<input type="submit" value="Change" /> 
+								</p> 
+
+								{% elif posts.privacy = 'OF' %}
+								<select name="priv"> 
+								        <option value="Pub">Public</option> 
+								        <option value="OF" selected>Only Followers</option> 
+								        <option value="OM">Only Me</option> 
+								</select> 
+								<input type="submit" value="Change" /> 
+								</p> 
+
+								{% else %}
+								<select name="priv"> 
+								        <option value="Pub">Public</option> 
+								        <option value="OF" >Only Followers</option> 
+								        <option value="OM"selected>Only Me</option> 
+								</select> 
+								<input type="submit" value="Change" /> 
+								</p> 
+								</form> 
+
+								</select>
+								{% endif %}
+								<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
+								{% endif %}
+								</td>
+							</tr>
 					<tr><td></td></tr>
 				
 					{% endif %}
