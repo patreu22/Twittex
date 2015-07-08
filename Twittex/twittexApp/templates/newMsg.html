@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="well">Send Message</h1>
-<form method="post" class="form" enctype="multipart/form-data">
-    {% csrf_token %}
+<div class="container">
+	<h1 class="well">Send Message</h1>
+	<form method="post" class="form" enctype="multipart/form-data">
+	    {% csrf_token %}
 
-    <div class="form-group">
-        <input type="text" class="form-control" id="empfaenger" name="empfaenger" placeholder="Reciepment" required="" autofocus="" />
-        <input type="text" class="form-control" id="inhalt" name="inhalt" placeholder="Inhalt" required=""/>
-    </div>
-    <input type="submit" value="Send Messages" />
-    </form>
+	    <div class="form-group">
+	        <input type="text" class="form-control" id="empfaenger" name="empfaenger" placeholder="Reciepment" required="" autofocus="" />
+	        <input type="text" class="form-control" id="inhalt" name="inhalt" placeholder="Inhalt" required=""/>
+	    </div>
+	    <input type="submit" value="Send Messages" />
+	</form>
+</div>
 {% endblock %}
