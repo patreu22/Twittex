@@ -6,7 +6,6 @@
     {% csrf_token %}
 
     <div class="form-group">
-        <input type="hidden" id="absender" name="absender" value={{ request.user.username }} />
         <input type="text" class="form-control" id="empfaenger" name="empfaenger" placeholder="Reciepment" required="" autofocus="" />
         <input type="text" class="form-control" id="inhalt" name="inhalt" placeholder="Inhalt" required=""/>
     </div>

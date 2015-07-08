@@ -244,8 +244,8 @@ def NachrichtenView(request):
     context_object_name = 'conversations'
 
     user = request.user
-    eingang = Conversation.objects.filter(Q(empfaenger=user))
-    ausgang = Conversation.objects.filter(Q(absender=user))
+    eingang = Conversation.objects.filter(empfaenger=user).distinct('absender')
+    ausgang = Conversation.objects.filter(absender=user).distinct('empfaenger')
 
     return render_to_response('nachrichten.html', {'eingang': eingang, 'ausgang': ausgang,'request': request}, context_instance=RequestContext(request))
 
@@ -254,7 +254,7 @@ def sendMsg(request):
     if request.method == 'POST':
         inhalt = request.POST['inhalt']
         empfaenger = request.POST['empfaenger']
-        absender = request.POST['absender']
+        absender = request.user
 
         if not (User.objects.filter(username=empfaenger).exists()):
             # user not found
@@ -266,7 +266,7 @@ def sendMsg(request):
         msg = Conversation(absender=absender, empfaenger=empfaenger, inhalt=inhalt)
         msg.save()
 
-        return redirect('/messages/')
+        return redirect('/messages/' + empfaenger.username)
     else:
         return render(request,
             'newMsg.html')

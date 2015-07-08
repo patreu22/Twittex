@@ -1,37 +1,40 @@
 {% extends "base.html" %}
+{% load staticfiles %}
+{% block extra_head %}
+<link href="{% static "css/messages.css" %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 
 <h1 class="well">Your Conversation with <a href="/profile/{{partner.username}}">{{partner.username}}</a></h1>
 
-<table class="table">
-         <thead>
-                 <tr>
-                         <th>From</th>
-                         <th>Content</th>
-                         <th>Latest Date</th>
-                  </tr>
-        </thead>
-        <tbody>
-            {% for conv in conversations %}
-                 <tr>
-                         <td><a href="/profile/{{conv.absender.username }}">{{ conv.absender.username }}</a></td>
-                         <td> {{ conv.inhalt }} </td>
-                         <td> {{ conv.datum }}</td>
-                 </tr>
-            {% endfor %}
-        </tbody>
-</table>
-
+<div class="col-md-10">
+              <ul>
+                  {% for msg in conversations %}
+                    {% if msg.absender.username != request.user.username %}
+                      <div class="bubble">
+                      <p>({{msg.datum}})<br/>
+                        {{msg.inhalt}}</p>
+                      </div>
+                    {% else %}
+                      <div class="bubble bubble--alt">
+                      <p>({{msg.datum}})<br/>
+                        {{msg.inhalt}}</p>
+                      </div>
+                    {% endif %}
+        			    {% endfor %}
+      		    </ul>
+    </div>
 
 <form action="/sendMsg/" method="post" class="form" enctype="multipart/form-data">
     {% csrf_token %}
 
     <div class="form-group">
-        <input type="hidden" id="absender" name="absender" value={{ request.user.username }} />
-        <input type="text" class="form-control" id="empfaenger" name="empfaenger" placeholder="Reciepment" required="" autofocus="" />
+        <input type="hidden" class="form-control" id="empfaenger" name="empfaenger" value={{ partner.username }} />
         <input type="text" class="form-control" id="inhalt" name="inhalt" placeholder="Inhalt" required=""/>
     </div>
     <input type="submit" value="Send Messages" />
     </form>
+
+
 {% endblock %}
