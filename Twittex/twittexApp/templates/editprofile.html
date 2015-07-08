@@ -33,7 +33,7 @@
         </div>
 
     <input type="submit" class="btn btn-info" value="Edit my Profile" />
-    <a href="/profile/duybach" class="btn btn-info" role="button">Back to the Profile</a>
+    <a href="/profile/{{ request.user.username }}" class="btn btn-info" role="button">Back to the Profile</a>
 </form>
 </div>
 {% endblock content %}
