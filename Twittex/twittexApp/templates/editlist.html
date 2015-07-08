@@ -5,17 +5,19 @@
      {% endblock %}
 
 {% block content %}
-<h1 class="well">Edit Followerlist</h1>
-<form method="post" class="form" enctype="multipart/form-data">
-    {% csrf_token %}
-    Choose User by pressing CTR/STRG+Click on User!
-    {% for field in form %}
-        <div class="form-group">
-        {{ field.errors }}
-        {{ field.label_tag }}
-        {{ field }}
-        </div>
-    {% endfor %}
-    <input type="submit" value="Edit my Followerlist" />
-</form>
+<div class="container">
+    <h1 class="well">Edit Followerlist</h1>
+    <form method="post" class="form" enctype="multipart/form-data">
+        {% csrf_token %}
+        Choose User by pressing CTR/STRG+Click on User!
+        {% for field in form %}
+            <div class="form-group">
+            {{ field.errors }}
+            <p>{{ field.label_tag }}</p>
+            <p>{{ field }}</p>
+            </div>
+        {% endfor %}
+        <input type="submit" value="Edit my Followerlist" />
+    </form>
+</div>
 {% endblock content %}

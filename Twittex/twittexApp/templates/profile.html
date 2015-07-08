@@ -1,93 +1,113 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<br/>
-	<div class="container">
-	<div class="well">
-        {% if user.username = request.user.username %}
-            <h1>Welcome to your profile!</h1>
-        {% else %}
-		    <h1>Welcome to {{ user.username }}'s profile!</h1>
-        {% endif %}
+
+<br/>
+<div class="container-fluid">
+	<div class="well text-center">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		        {% if user.username = request.user.username %}
+		            <h1>Welcome to your profile!</h1>
+		        {% else %}
+				    <h1>Welcome to {{ user.username }}'s profile!</h1>
+		        {% endif %}
+		    </div>
+		</div>
 	</div>
 
-		<table>
-			<tr>
-				<td class="well" width="30%"><img class="img-responsive img-rounded" src="{{ user.userprofile.getPicture }}" alt="Profile Picture"/>
-				Description:<br/>{{ user.userprofile.desc }}<br/><br/>
+	<div class="row">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+			<div class="well">
+				<img class="img-responsive img-rounded  center-block" src="{{ user.userprofile.getPicture }}" alt="Profile Picture"/>
+				</br>
+				<p>Description:<br/>{{ user.userprofile.desc }}<br/><br/></p>
 				{% if request.user = user %}
-            		<a href="/settings/edit" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Profile</a>
-					<a href="/settings/password_change" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Password</a>
-					{% elif follow = no %}
-					<a href={% url 'twittexApp:Follow' user.username %} class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Follow</a>
-					{%elif follow = yes%}
-					<a href={% url 'twittexApp:Unfollow' user.username %}  class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Unfollow</a>
-        {% endif %}
-				</td>
-				<td>
-					<div class="well well-sm">
-					<h2>@{{ user.username }}'s posts:</h2>
-					{% if privacy = yes %}
-						{% for posts in object_list %}
-							{% if posts.autor = user  %}
-							<table>
-							<tr>
+	    		<a href="/settings/edit" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Profile</a>
+				<a href="/settings/password_change" class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Edit Password</a>
+				{% elif follow = no %}
+				<a href={% url 'twittexApp:Follow' user.username %} class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Follow</a>
+				{%elif follow = yes%}
+				<a href={% url 'twittexApp:Unfollow' user.username %}  class="btn btn-primary btn-sm dropdown-toggle btn-block" role="button">Unfollow</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+			<div class="well well-sm">
+				<table class="table">
+					<thead>
+					<tr>
+						<td>
+							<h2>@{{ user.username }}'s posts:</h2>
+							{% if privacy = yes %}
+							{% for posts in object_list %}
+							{% if posts.autor = user  %}</td>
+					</tr>
+					</thead>
+					<tr class="info">
 								<td><a href="/profile/{{ user.username }}">@{{ user.username }}</a> wrote at {{ posts.datum }}
 								<div class="Post">{{ posts.inhalt|safe }}</div>
 								{% if request.user = user %}
 								<form action={% url 'twittexApp:viewPrivacy' posts.id %} method="post"> {% csrf_token %}
-<p> 
-	{% if posts.privacy = 'Pub' %}
-<select name="priv"> 
-        <option value="Pub">Public</option> 
-        <option value="OF">Only Followers</option> 
-        <option value="OM">Only Me</option> 
-</select> 
-<input type="submit" value="Change" /> 
-</p> 
+								<p> 
+									{% if posts.privacy = 'Pub' %}
+								<select name="priv"> 
+								        <option value="Pub">Public</option> 
+								        <option value="OF">Only Followers</option> 
+								        <option value="OM">Only Me</option> 
+								</select> 
+								<input type="submit" value="Change" /> 
+								</p> 
 
-{% elif posts.privacy = 'OF' %}
-<select name="priv"> 
-        <option value="Pub">Public</option> 
-        <option value="OF" selected>Only Followers</option> 
-        <option value="OM">Only Me</option> 
-</select> 
-<input type="submit" value="Change" /> 
-</p> 
+								{% elif posts.privacy = 'OF' %}
+								<select name="priv"> 
+								        <option value="Pub">Public</option> 
+								        <option value="OF" selected>Only Followers</option> 
+								        <option value="OM">Only Me</option> 
+								</select> 
+								<input type="submit" value="Change" /> 
+								</p> 
 
-{% else %}
-<select name="priv"> 
-        <option value="Pub">Public</option> 
-        <option value="OF" >Only Followers</option> 
-        <option value="OM"selected>Only Me</option> 
-</select> 
-<input type="submit" value="Change" /> 
-</p> 
-</form> 
+								{% else %}
+								<select name="priv"> 
+								        <option value="Pub">Public</option> 
+								        <option value="OF" >Only Followers</option> 
+								        <option value="OM"selected>Only Me</option> 
+								</select> 
+								<input type="submit" value="Change" /> 
+								</p> 
+								</form> 
 
-</select>
-{% endif %}
+								</select>
+								{% endif %}
 								<a href="/delete/{{ posts.id }}" class="btn btn-primary btn-sm">Delete</a>
 								{% endif %}
 								</td>
 							</tr>
-						</table>
-							{% endif %}
-						{% endfor %}
-					{% else %}
-						<table>
-							<tr>
-								<td>
-									<div>
-										Sorry, but only {{ user }} and who he is following can see those posts :/
-									</div>
-								</td>
-							</tr>
-						</table>
+					<tr><td></td></tr>
+				
 					{% endif %}
-				</div>
-                </td>
-			</tr>
-		</table>
-     </div>
+				{% endfor %}
+				</table>
+				{% else %}
+				<table>
+					<tr>
+						<td>
+							<div>
+								Sorry, but only {{ user }} and who he is following can see those posts :/
+							</div>
+						</td>
+					</tr>
+				</table>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		</br>
+	</div>
+</div>
+
 {% endblock content %}

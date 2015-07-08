@@ -13,11 +13,23 @@
 			  <hr class="colorgraph"><br>
 			  
 			  <input type="text" class="form-control" id="id_username" name="username" placeholder="Username" required="" autofocus="" />
+
 			  <input type="password" class="form-control" id="id_password" name="password" placeholder="Password" required=""/>     	
 
 			 <input type="hidden" name="next" value="/home" />
 			 <button class="btn btn-lg btn-primary btn-block"  name="Submit" value="Login" type="Submit">
 			 Login</button>
+			 {% if form.non_field_errors %}
+			 <ul class="form-errors">
+			 	{% for error in form.non_field_errors %}
+			 	</br>
+			 	<div class="alert alert-danger">
+			 		<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			 		Wrong Username and/or Password. Please try again and check for correct spelling!
+			 	</div>
+			 	{% endfor %}
+			 </ul>
+			 {% endif %}
 			 <a href="/password_reset/">Forgot Password?</a>
 		</form>			
 	</div>

@@ -2,7 +2,7 @@
     {% block title %}Contact Us{% endblock title %}
     {% block content %}
     <br/>
-    <div class="container">
+    <div class="container-fluid">
       <h1 class="jumbotron">Contact</h1>
      <!-- <form  role="form"> -->
       <form role="form" class="form-horizontal" method="post" action="/contact/send/">
@@ -11,7 +11,11 @@
             <div class="name">
                 <div class="col-sm-10">
                   <label for="name">Name  <span class="required">*</span></label>
-                  <input name= "name" class="form-control" maxlength="255" size="12" />
+                  {% if user.is_authenticated %}
+                  <input name= "name" class="form-control" maxlength="255" size="12" value="{{ user.username }}"/>
+                  {% else %}
+                  <input name= "name" class="form-control" maxlength="255" size="12"/>
+                  {% endif %}
               </div>
             </div>
           </div>
@@ -19,7 +23,12 @@
             <div class="email">
               <div class="col-sm-10"> 
                 <label for="email">Email Address  <span class="required">*</span></label>
-                <input name="email" class="form-control" type="text" maxlength="255" size="35" />
+                {% if user.is_authenticated %}
+                <input name="email" class="form-control" type="text" maxlength="255" size="35" value="{{ user.email }}"/>
+                  {% else %}
+                  <input name="email" class="form-control" type="text" maxlength="255" size="35"/>
+                  {% endif %}
+                </input>
                 </div> 
             </div>
           </div>
@@ -45,6 +54,7 @@
             </div>
         </form>
       <!-- </form>-->
+    </br>
     </div>
 
     {% endblock content %}
