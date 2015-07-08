@@ -26,61 +26,51 @@
 			<div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
+               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <!-- <span class="sr-only">Toggle navigation</span> -->
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <li><a class="navbar-brand" href="/">Twittex</a></li>
+                <a class="navbar-brand" href="/">Twittex</a>
             </div>
 
-		  <div class="navbar-collapse.collapse">
+		  <div class="collapse navbar-collapse" id="myNavbar">
               {% if user.is_authenticated %}
 		      <ul class="nav navbar-nav">
 		      	<li>
-		      		<form class="navbar-form navbar-left">
-		      			<a href="/home/">Timeline</a>
-		    		</form>
+		      		<a href="/home/">Timeline</a>
 		    	</li>
                   <li>
-		        	<form class="navbar-form navbar-left">
-		        			<a href="/profile/{{ request.user.username }}">{{ request.user.username }}'s Profile</a>
-		        	</form>
-		        </li>
+                  	<a href="/profile/{{ request.user.username }}">{{ request.user.username }}'s Profile</a>
+                  </li>
 		        <!--	<form class="navbar-form navbar-left">
 		        		<button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm">Post</button>
 		        		
   					</form>  -->
   				<li>
-		        	<form class="navbar-form navbar-left">
-                        {% csrf_token %}
-		        		<a data-toggle="modal" data-target="#myModal">Make a post</a>
-		        	</form>
-		        </li>
+  					{% csrf_token %}
+  					<a data-toggle="modal" data-target="#myModal">Make a post</a>
+  				</li>
 		        <li>
-		        	<form class="navbar-form navbar-left">
-		        			<a href="/Messages/NewMsg">Messages <span class="badge">0</span></a>
-		        	</form>
+		        	<a href="/Messages/NewMsg">Messages <span class="badge">0</span></a>
 		        </li>
 				<li>
-		        	<form class="navbar-form navbar-left">
-		        			<a href="/followerlist/">Followerlists</a>
-		        	</form>
+					<a href="/followerlist/">Followerlists</a>
 				</li>
 		        <li>
-		        	<form class="navbar-form navbar-left">
-		        		<a href="/notification/">Notifications <span class="badge">{{ user.userprofile.mentioned_count }}</span></a>
-		        	</form>
+		        	<a href="/notification/">Notifications <span class="badge">{{ user.userprofile.mentioned_count }}</span></a>
 		        </li>
 		      </ul>
             {% endif %}
 		    <ul class="nav navbar-nav navbar-right">
               {% if user.is_authenticated %}
 		    	<li>
-		    		<form class="navbar-form navbar-left" role="search" action ="/search/" method= "get">
+		    		<form class="navbar-form" role="search" action ="/search/" method= "get">
   						<div class="form-group form-group-sm">
-  							<input type="text" class="form-control" name = "q">
+  							<div class="col-xs-4">
+  								<input type="text" class="form-control" name = "q">
+  							</div>
   						</div>
   						<button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search</button>
   					</form>
@@ -88,37 +78,31 @@
 				</li>
             {% endif %}
 		        <li>
-		        	<form class="navbar-form navbar-left">
-		        	<div class="dropdown">
-		        		<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-		        			Help
-		        			<span class="caret"></span>
-		        		</button>
-		        		<ul class="dropdown-menu">
-		        			<li><a href="/impressum">Impressum</a></li>
-		        			<li><a href="/contact">Contact</a></li>
-		        			<li><a href="/help">Help</a></li>
-		        		</ul>
-		        	</div>
-		        </form>
+		        	<form class="navbar-form">
+			        	<div class="dropdown">
+			        		<button class="btn btn-primary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+			        			Help
+			        			<span class="caret"></span>
+			        		</button>
+			        		<ul class="dropdown-menu">
+			        			<li><a href="/impressum">Impressum</a></li>
+			        			<li><a href="/contact">Contact</a></li>
+			        			<li><a href="/help">Help</a></li>
+			        		</ul>
+			        	</div>
+			        </form>
 		        </li>
 		        
         		{% if user.is_authenticated %}
         		<li>
-		        	<form class="navbar-form navbar-left">
-        				<a href="/logout"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
-        			</form>
+        			<a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
         		</li>
         		{% else %}
         		<li>
-		        	<form class="navbar-form navbar-left">
-		        		<a href="/login"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a>
-		        	</form>
-		        </li>
+        			<a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+        		</li>
 		        <li>
-		        	<form class="navbar-form navbar-left">
-		        		<a href="/register"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Register</a>
-		        	</form>
+		        	<a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a>
 		        </li>
         		{% endif %}
     		</ul>
