@@ -2,18 +2,17 @@
 
 {% block content %}
 
+
 <h1 class="well">Your Conversation's</h1>
 
 
-
 <ul class="nav nav-tabs">
-    <li><a href="#item1" data-toggle="tab">Inbox</a></li>
-    <li><a href="#item2" data-toggle="tab">Send Message's</a></li>
+    <li role="presentation" class="active"><a href="#item1" data-toggle="tab">Inbox</a></li>
+    <li role="presentation"><a href="#item2" data-toggle="tab">Send Message's</a></li>
 </ul>
 
 <div class="tab-content">
 <div class="tab-pane active" id="item1">
-    <h2 class="well">Inbox</h2>
 <table class="table">
          <thead>
                  <tr>
@@ -31,7 +30,6 @@
         </tbody>
 </table></div>
 <div class="tab-pane" id="item2">
-    <h2 class="well">Send Messages</h2>
 <table class="table">
          <thead>
                  <tr>
