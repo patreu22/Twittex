@@ -12,6 +12,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
@@ -173,9 +174,11 @@ def ListFollowView(request, pk):
 
 
 # called by submit post
-@login_required(login_url='/login/')
 def newPost(request):
-    content = str(request.POST.get('inhalt'))
+    if request.user.is_authenticated():
+        content = str(request.POST.get('inhalt'))
+    else:
+        content = str(request.GET.get('inhalt'))
     #hashtag search from http://stackoverflow.com/questions/6331497
     hashtags = set()
     mentioned = set()
@@ -195,7 +198,12 @@ def newPost(request):
             content = content.replace(tag, "<a href='http://"+tag+"'>"+tag+"</a>")
 
     p = Posts(inhalt=content, hashtags=str(hashtags))
-    p.autor = request.user
+
+    if request.user.is_authenticated():
+        p.autor = request.user
+    else:
+        p.autor = User.objects.get(username = str(request.GET.get('username')))
+
     p.save()
 
     for username in mentioned:
@@ -353,12 +361,14 @@ def unfollowing(request, username):
     request.user.userprofile.follows.remove(userp.userprofile)
     return redirect('/profile/' +userp.username )
 
+
 #API
+@csrf_exempt
 def apiPost(request):
     if request.method == "POST":
-        usr = str(request.POST.get('username'))
-        pswd = str(request.POST.get('password'))
-        content = str(request.POST.get('inhalt'))
+        usr = str(request.GET.get('username'))
+        pswd = str(request.GET.get('password'))
+        content = str(request.GET.get('inhalt'))
         user = authenticate(username=usr, password=pswd)
         if user is not None:
             return newPost(request)
