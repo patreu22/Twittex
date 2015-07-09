@@ -175,10 +175,7 @@ def ListFollowView(request, pk):
 
 # called by submit post
 def newPost(request):
-    if request.user.is_authenticated():
-        content = str(request.POST.get('inhalt'))
-    else:
-        content = str(request.GET.get('inhalt'))
+    content = str(request.POST.get('inhalt'))
     #hashtag search from http://stackoverflow.com/questions/6331497
     hashtags = set()
     mentioned = set()
@@ -202,7 +199,7 @@ def newPost(request):
     if request.user.is_authenticated():
         p.autor = request.user
     else:
-        p.autor = User.objects.get(username = str(request.GET.get('username')))
+        p.autor = User.objects.get(username = str(request.POST.get('username')))
 
     p.save()
 
@@ -366,9 +363,9 @@ def unfollowing(request, username):
 @csrf_exempt
 def apiPost(request):
     if request.method == "POST":
-        usr = str(request.GET.get('username'))
-        pswd = str(request.GET.get('password'))
-        content = str(request.GET.get('inhalt'))
+        usr = str(request.POST.get('username'))
+        pswd = str(request.POST.get('password'))
+        content = str(request.POST.get('inhalt'))
         user = authenticate(username=usr, password=pswd)
         if user is not None:
             return newPost(request)
