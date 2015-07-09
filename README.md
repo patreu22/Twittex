@@ -15,7 +15,7 @@ Twittex is a short messaging service (similar to Twitter) with finer privacy set
 6. Download this repo (`$git clone https://github.com/patreu22/Twittex/`)
 7. Install PostgreSQL (Easy going for Mac: http://postgresapp.com/de/ , for other OS you have to take a deeper look)
 8. Run PostgreSQL
-9. Open PostgreSQL on your with `$psql`
+9. Open PostgreSQL with `$psql`
 10. Run `CREATE USER django PASSWORD 'django'`
 11. Run `CREATE DATABASE twittex_db OWNER django;`
 12. Run `$python manage.py migrate auth`
