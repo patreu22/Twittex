@@ -1,34 +1,28 @@
-# Twittex  
+# Twittex 
 
-Get it work:  
+##What is Twittex?
 
-1) Install Django  
-2) Install PostgreSQL (Easy going for Mac: http://postgresapp.com/de/)  
-3) Set up the Database:  
-   a) Enter psql console by terminal  
-      # CREATE USER django;  
-   b) After that enter following:  
-      # CREATE DATABASE twittextestdb OWNER django;  
-    
-(Guide reference: http://djangogirls.gitbooks.io/django-girls-tutorial-extensions/content/optional_postgresql_installation/README.html)  
-  
-  
-Start it:  
-1) Run Postgresql with user: django pw: django and db: twittex_db
+Twittex is a short messaging service (similar to Twitter) with finer privacy settings for use in a university environment.
+<img src="https://cloud.githubusercontent.com/assets/11362357/8591885/8a5f930e-262b-11e5-8d19-e56cc82e9ef8.png"></img>
 
-2) Unter Twittex/Twittex/settings.py: MEDIA_ROOT = '(PFAD WO "manage.py" IST)/media' (Ganz unten)
+##Guide to install Twittex
 
-3) pip install Pillow
+1. Install Python
+2. Install Django
+3. Install Pip
+4. Install Pillow via Pip (`$pip install pillow`)
+5. Install Pyscss via Pip (`$pip install python-pyscss`)
+6. Download this repo (`$git clone https://github.com/patreu22/Twittex/`)
+7. Install PostgreSQL (Easy going for Mac: http://postgresapp.com/de/ , for other OS you have to take a deeper look)
+8. Run PostgreSQL
+9. Open PostgreSQL on your with `$psql`
+10. Run `CREATE USER django PASSWORD 'django'`
+11. Run `CREATE DATABASE twittex_db OWNER django;`
+12. Run `$python manage.py migrate auth`
+13. Run `$python manage.py migrate`
+14. Start Twittex with `$python manage.py runserver`locally. For making it accessible over your IP for everybody use `$python manage.py runserver 0.0.0.0:8000`
 
-4) Start App with
 
-	($python manage.py createsuperuser)
-	
-	$python manage.py migrate auth
-	
-	$python manage.py migrate
-	
-	$python manage.py runserver	
 	
   
 Enjoy ;-)  
