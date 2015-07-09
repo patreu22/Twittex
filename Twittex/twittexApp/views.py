@@ -175,44 +175,54 @@ def ListFollowView(request, pk):
 
 # called by submit post
 def newPost(request):
-    content = str(request.POST.get('inhalt'))
-    #hashtag search from http://stackoverflow.com/questions/6331497
-    hashtags = set()
-    mentioned = set()
-    #links erkennen
-    for tag in content.split():
-        if tag.startswith("#"):
-            strippedTag = tag.strip("#")
-            hashtags.add(strippedTag)
-            content = content.replace(tag, "<a href='/search/?q="+strippedTag+"'>"+tag+"</a>")
-        if tag.startswith("@"):
-            strippedTag = tag.strip("@")
-            mentioned.add(strippedTag)
-            content = content.replace(tag, "<a href='/profile/"+strippedTag+"'>"+tag+"</a>")
-        if (tag.startswith("http://") | tag.startswith("https://")):
-            content = content.replace(tag, "<a href='"+tag+"'>"+tag+"</a>")
-        if tag.startswith("www."):
-            content = content.replace(tag, "<a href='http://"+tag+"'>"+tag+"</a>")
+    if request.method == "POST":
+        content = str(request.POST.get('inhalt'))
+        #hashtag search from http://stackoverflow.com/questions/6331497
+        hashtags = set()
+        mentioned = set()
+        #links erkennen
+        for tag in content.split():
+            if tag.startswith("#"):
+                strippedTag = tag.strip("#")
+                hashtags.add(strippedTag)
+                content = content.replace(tag, "<a href='/search/?q="+strippedTag+"'>"+tag+"</a>")
+            if tag.startswith("@"):
+                strippedTag = tag.strip("@")
+                mentioned.add(strippedTag)
+                content = content.replace(tag, "<a href='/profile/"+strippedTag+"'>"+tag+"</a>")
+            if (tag.startswith("http://") | tag.startswith("https://")):
+                content = content.replace(tag, "<a href='"+tag+"'>"+tag+"</a>")
+            if tag.startswith("www."):
+                content = content.replace(tag, "<a href='http://"+tag+"'>"+tag+"</a>")
 
-    p = Posts(inhalt=content, hashtags=str(hashtags))
+        p = Posts(inhalt=content, hashtags=str(hashtags))
 
-    if request.user.is_authenticated():
-        p.autor = request.user
+        if request.user.is_authenticated():
+            p.autor = request.user
+        else:
+            usr = str(request.POST.get('username'))
+            pswd = str(request.POST.get('password'))
+
+            user = authenticate(username=usr, password=pswd)
+            if user is not None:
+                p.autor = User.objects.get(username = str(request.POST.get('username')))
+            else:
+                return HttpResponse('invalid user / pwd'+usr+pswd)
+
+        p.save()
+
+        for username in mentioned:
+            user = User.objects.get(username=username)
+            if (user.username == username):
+                user.userprofile.mentioned_count += 1
+                user.userprofile.save()
+                p.mentioned.add(user)
+                p.save()
+
+        p.save()
+        return redirect('/home/')
     else:
-        p.autor = User.objects.get(username = str(request.POST.get('username')))
-
-    p.save()
-
-    for username in mentioned:
-        user = User.objects.get(username=username)
-        if (user.username == username):
-            user.userprofile.mentioned_count += 1
-            user.userprofile.save()
-            p.mentioned.add(user)
-            p.save()
-
-    p.save()
-    return redirect('/home/')
+        return HttpResponse('Post method required')
 
 
 class DeleteView(PostsName, DeleteView):
