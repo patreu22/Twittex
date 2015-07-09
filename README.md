@@ -2,7 +2,7 @@
 
 ##What is Twittex?
 
-Twittex is a short messaging service (similar to Twitter) with finer privacy settings for use in a university environment.
+Twittex is a short messaging service (similar to Twitter) with finer privacy settings for use in a university environment. For a feature list check out our Github Wiki page.
 <img src="https://cloud.githubusercontent.com/assets/11362357/8591885/8a5f930e-262b-11e5-8d19-e56cc82e9ef8.png"></img>
 
 ##Guide to install Twittex
