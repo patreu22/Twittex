@@ -25,7 +25,7 @@ Twittex is a short messaging service (similar to Twitter) with finer privacy set
 15. Start Twittex with `$python manage.py runserver`locally. For making it accessible over your IP for everybody use `$python manage.py runserver 0.0.0.0:8000`
 
 
-	
+That is the instruction for installing Twittex on a (Amazon) Ubuntu machine, for other systems you have to update the path for file storing in the settings.py.
   
 Enjoy ;-)  
   
